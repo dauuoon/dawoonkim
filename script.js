@@ -975,18 +975,6 @@ function closeModal() {
   // ... 기존 모달 닫기 코드 ...
 }
 
-// 비밀번호 팝업 열 때
-function showPasswordPopup() {
-  document.body.classList.add("popup-open");
-  // ... 기존 팝업 표시 코드 ...
-}
-
-// 비밀번호 팝업 닫을 때
-function hidePasswordPopup() {
-  document.body.classList.remove("popup-open");
-  // ... 기존 팝업 숨김 코드 ...
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   if (window.location.pathname.includes("vault.html")) {
     const isAuthorized = sessionStorage.getItem("vaultAuthorized");
