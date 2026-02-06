@@ -2,15 +2,29 @@
 const fs = require('fs');
 const path = require('path');
 
-// 환경 변수에서 설정 가져오기
-const NOTION_TOKEN = process.env.NOTION_TOKEN;
-const PROJECTS_DB = process.env.PROJECTS_DB;
-const ABOUT_DB = process.env.ABOUT_DB;
-const VAULT_DB = process.env.VAULT_DB;
-const SETTINGS_DB = process.env.SETTINGS_DB;
+// 환경 변수 또는 config.js에서 설정 가져오기
+let NOTION_TOKEN = process.env.NOTION_TOKEN;
+let PROJECTS_DB = process.env.PROJECTS_DB;
+let ABOUT_DB = process.env.ABOUT_DB;
+let VAULT_DB = process.env.VAULT_DB;
+let SETTINGS_DB = process.env.SETTINGS_DB;
+
+// config.js가 있으면 그것을 사용
+if (!NOTION_TOKEN) {
+  try {
+    const config = require('../config.js');
+    NOTION_TOKEN = config.NOTION_CONFIG?.TOKEN;
+    PROJECTS_DB = config.NOTION_CONFIG?.PROJECTS_DB;
+    ABOUT_DB = config.NOTION_CONFIG?.ABOUT_DB;
+    VAULT_DB = config.NOTION_CONFIG?.VAULT_DB;
+    SETTINGS_DB = config.NOTION_CONFIG?.SETTINGS_DB;
+  } catch (e) {
+    // config.js 없음, 환경 변수 필요
+  }
+}
 
 if (!NOTION_TOKEN) {
-  console.error('❌ NOTION_TOKEN 환경 변수가 설정되지 않았습니다.');
+  console.error('❌ NOTION_TOKEN을 찾을 수 없습니다. 환경 변수 또는 config.js를 확인하세요.');
   process.exit(1);
 }
 
