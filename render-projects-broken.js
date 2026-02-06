@@ -28,6 +28,9 @@ async function renderProjects(projects) {
   const container = document.getElementById('projects-container');
   if (!container) return;
   
+  // 로딩 표시
+  container.innerHTML = '<div style="text-align: center; padding: 50px; color: #E3C1B0;">Loading projects...</div>';
+  
   try {
     const projectList = projects || await getProjects();
     
@@ -113,7 +116,9 @@ function initProjectEvents() {
   // 프로젝트 클릭 이벤트
   document.querySelectorAll(".project li").forEach((project) => {
     project.addEventListener("click", function () {
-      const projectTitle = this.querySelector(".project_title_blur, .project_title").textContent.trim();
+      const projectTitle = this.querySelector(
+        ".project_title_blur, .project_title"
+      ).textContent.trim();
       const isLocked = this.querySelector('img[src="img/lock.svg"]') !== null;
       
       console.log(`프로젝트 클릭: ${projectTitle}, 잠금: ${isLocked}`);
@@ -132,8 +137,7 @@ function initProjectEvents() {
 // 비밀번호 팝업 표시
 function showPasswordPopup(projectTitle) {
   const popup = document.getElementById("popup-container");
-  console.log('popup 요소:', popup);
-  
+  console.log('popup 요소:', popup); // 디버깅용
   if (!popup) {
     console.error('❌ popup-container를 찾을 수 없습니다!');
     return;
@@ -144,26 +148,27 @@ function showPasswordPopup(projectTitle) {
   console.log('✅ 비밀번호 팝업이 표시되었습니다');
 
   const passwordInput = document.getElementById("password-input");
-  const submitBtn = document.getElementById("submit-password");
-  
   passwordInput.value = "";
   passwordInput.focus();
-
-  // 기존 이벤트 리스너 제거
-  submitBtn.onclick = null;
-  passwordInput.onkeypress = null;
-
-  const closePasswordPopup = () => {
-    popup.classList.remove("active");
-    popup.classList.add("hidden");
-    document.removeEventListener("keydown", escHandler);
-  };
 
   const escHandler = (e) => {
     if (e.key === "Escape") {
       closePasswordPopup();
     }
   };
+  document.addEventListener("keydown", escHandler);
+
+  popup.addEventListener("click", function (e) {
+    if (e.target === popup) {
+      closePasswordPopup();
+    }
+  });
+
+  function closePasswordPopup() {
+    popup.classList.remove("active");
+    popup.classList.add("hidden");
+    document.removeEventListener("keydown", escHandler);
+  }
 
   const checkPassword = () => {
     const password = passwordInput.value;
@@ -180,25 +185,16 @@ function showPasswordPopup(projectTitle) {
     }
   };
 
-  // 새로운 이벤트 리스너 등록
-  submitBtn.addEventListener("click", checkPassword);
-  
-  passwordInput.addEventListener("keypress", (e) => {
+  document.getElementById("submit-password").onclick = checkPassword;
+
+  passwordInput.onkeypress = function (e) {
     if (e.key === "Enter") {
       checkPassword();
     }
-  });
-
-  document.addEventListener("keydown", escHandler);
-
-  popup.addEventListener("click", (e) => {
-    if (e.target === popup) {
-      closePasswordPopup();
-    }
-  });
+  };
 }
 
-// 프로젝트 상세 표시
+// 프로젝트 상세 표시 (기존 함수와 연동)
 function showProjectContent(projectTitle) {
   const project = window.projectsData[projectTitle];
   if (!project) {
@@ -278,3 +274,5 @@ function showProjectContent(projectTitle) {
       modalBody.innerHTML = '<div class="error-message">이미지를 불러오는데 실패했습니다.</div>';
     });
 }
+
+// renderProjects는 script.js의 loadAllData()에서 호출됩니다
