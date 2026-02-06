@@ -1,0 +1,56 @@
+name: Update Notion Data
+
+on:
+  # 매일 오후 2시 (KST) = UTC 오전 5시
+  schedule:
+    - cron: '0 5 * * *'
+  
+  # 수동 실행 가능
+  workflow_dispatch:
+  
+  # main 브랜치에 push될 때도 실행
+  push:
+    branches:
+      - main
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Fetch Notion data
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          PROJECTS_DB: ${{ secrets.PROJECTS_DB }}
+          ABOUT_DB: ${{ secrets.ABOUT_DB }}
+          VAULT_DB: ${{ secrets.VAULT_DB }}
+          SETTINGS_DB: ${{ secrets.SETTINGS_DB }}
+        run: node scripts/fetch-notion.js
+      
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --quiet data/notion-data.json || echo "changed=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/notion-data.json
+          git commit -m "🔄 Update Notion data - $(date +'%Y-%m-%d %H:%M KST')"
+          git push
+      
+      - name: No changes
+        if: steps.check_changes.outputs.changed != 'true'
+        run: echo "✅ 데이터 변경 사항 없음"

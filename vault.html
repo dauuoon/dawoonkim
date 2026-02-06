@@ -133,78 +133,15 @@
     <div class="horizontal-line"></div>
 
     <!-- study-grid 구조 수정 -->
-    <div class="study-grid-container"> <!-- 이 클래스에 반응형 Grid CSS를 적용할 것입니다. -->
-        <!-- 다섯번째 행의 아이템들 -->
-         <div class="study-item" data-full-image="path/full/vault/vault14.png">
-            <img src="path/thumbnail/vault/vault14.png" alt="Study item">
-        </div>         
-         <div class="study-item" data-full-image="path/full/vault/vault13.png">
-            <img src="path/thumbnail/vault/vault13.png" alt="Study item">
-        </div>
-        <div class="study-item" data-full-image="path/full/vault/vault12.png">
-            <img src="path/thumbnail/vault/vault12.png" alt="Study item">
-        </div>
-
-
-
-        <!-- 네 번째 행의 아이템들 -->
-        <div class="study-item" data-full-image="path/full/vault/vault11.png">
-            <img src="path/thumbnail/vault/vault11.png" alt="Study item">
-        </div>
-         <div class="study-item" data-full-image="path/full/vault/vault10.png">
-            <img src="path/thumbnail/vault/vault10.png" alt="Study item">
-        </div>
-        <div class="study-item" data-full-image="path/full/vault/vault9.png">
-            <img src="path/thumbnail/vault/vault9.png" alt="Study item">
-        </div>
-
-
-
-
-        <!-- 세 번째 행의 아이템들 -->
-        <div class="study-item" data-full-image="path/full/vault/vault8.png">
-            <img src="path/thumbnail/vault/vault8.png" alt="Study item">
-        </div>
-         <div class="study-item" data-full-image="path/full/vault/vault7.png">
-            <img src="path/thumbnail/vault/vault7.png" alt="Study item">
-        </div>
-        <div class="study-item" data-full-image="path/full/vault/vault6.png">
-            <img src="path/thumbnail/vault/vault6.png" alt="Study item">
-        </div>
-
-
-       
-
-        <!-- 두 번째 행의 아이템들 -->
-        <div class="study-item" data-full-image="path/full/vault/vault5.png">
-            <img src="path/thumbnail/vault/vault5.png" alt="Study item">
-        </div>
-         <div class="study-item" data-full-image="path/full/vault/vault4.png">
-            <img src="path/thumbnail/vault/vault4.png" alt="Study item">
-        </div>
-        <div class="study-item" data-full-image="path/full/vault/vault3.png">
-            <img src="path/thumbnail/vault/vault3.png" alt="Study item">
-        </div>
-
-
- 
-
-        <!-- 첫 번째 행의 아이템 -->
-        <div class="study-item" data-full-image="path/full/vault/vault2.png">
-            <img src="path/thumbnail/vault/vault2.png" alt="Study item">
-        </div>         
-        <div class="study-item" data-full-image="path/full/vault/vault1.png">
-            <img src="path/thumbnail/vault/vault1.png" alt="Study item">
-        </div>
-     
-        <!-- 모든 study-item들을 하나의 study-grid-container 안에 넣습니다. -->
+    <div class="study-grid-container">
+        <!-- JavaScript에서 동적으로 생성됩니다 -->
     </div>
 
     <div class="horizontal-line"></div>
 
     <!-- 어바웃 -->
     <div class="about_menu" id="about-menu-container">
-        <!-- about-content.html에서 동적 로드 -->
+        <!-- notion-api.js에서 동적 로드 -->
     </div>
 
 
@@ -272,8 +209,10 @@
         <!-- 스크립트 -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-        <script src="passwords.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+        <script src="notion-api.js"></script>
+        <script src="render-about.js"></script>
+        <script src="render-vault.js"></script>
         <script src="script.js"></script>
 </body>
 <footer>

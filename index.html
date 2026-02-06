@@ -76,75 +76,10 @@
     <!-- 메인 -->
     <div style="height: 8vh;"></div>
 
-    <div class="main_line"></div>
-    <ul class="project">
-        <li data-color="#FD895F"> <!-- 프로젝트마다 다른 색상 지정 -->
-            <div class="project_number">05</div>
-            <div class="project_title">WHY BOX (Ongoing···)</div>
-            <div class="project_text">
-                <span class="project_sub">WEB</span>
-                <span class="project_sub">2025</span>
-                <span class="project_sub">STUDY</span>
-                <span class="project_sub"><img src="img/unlock.svg"></span>
-            </div>
-        </li>
-    </ul>
-    <div class="main_line"></div>
-    <ul class="project">
-        <li data-color="#00A6D0"> <!-- 프로젝트마다 다른 색상 지정 -->
-            <div class="project_number">04</div>
-            <div class="project_title">VALOO-ACT WORKSHEET (Ongoing···)</div>
-            <div class="project_text">
-                <span class="project_sub">APP</span>
-                <span class="project_sub">2025</span>
-                <span class="project_sub">STUDY</span>
-                <span class="project_sub"><img src="img/unlock.svg"></span>
-            </div>
-        </li>
-    </ul>
-    <div class="main_line"></div>
-    <ul class="project">
-        <li data-color="#622BF7"> <!-- 프로젝트마다 다른 색상 지정 -->
-            <div class="project_number">03</div>
-            <div class="project_title_blur">IPLEX STUDIO PLATFORM</div>
-            <div class="project_text">
-                <span class="project_sub">WEB</span>
-                <span class="project_sub">2023</span>
-                <span class="project_sub">WORK</span>
-                <span class="project_sub"><img src="img/lock.svg"></span>
-            </div>
-        </li>
-    </ul>
-    <div class="main_line"></div>
-    <ul class="project">
-        <li data-color="#BAE14C"> <!-- 프로젝트마다 다른 색상 지정 -->
-            <div class="project_number">02</div>
-            <div class="project_title_blur">RIDP CMF ARCHIVE</div>
-            <div class="project_text">
-                <span class="project_sub">WEB</span>
-                <span class="project_sub">2021</span>
-                <span class="project_sub">WORK</span>
-                <span class="project_sub"><img src="img/lock.svg"></span>
-            </div>
-        </li>
-    </ul>
-    <div class="main_line"></div>
-    <ul class="project">
-        <li data-color="#E14C4C"> <!-- 프로젝트마다 다른 색상 지정 -->
-            <div class="project_number">01</div>
-            <div class="project_title_blur">99DAS PLATFORM</div>
-            <div class="project_text">
-                <span class="project_sub">WEB · APP</span>
-                <span class="project_sub">2020</span>
-                <span class="project_sub">WORK</span>
-                <span class="project_sub"><img src="img/lock.svg"></span>
-            </div>
-        </li>
-    </ul>
-    <div class="main_line"></div>
-    <!-- 여백용 -->
-    <ul class="project">
-    </ul>
+    <!-- 프로젝트 리스트 (동적 생성) -->
+    <div id="projects-container">
+        <!-- JavaScript에서 동적으로 생성됩니다 -->
+    </div>
 
 
     <!-- 비밀번호 입력 팝업 -->
@@ -214,7 +149,9 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-        <script src="passwords.js"></script>
+        <script src="notion-api.js"></script>
+        <script src="render-projects.js"></script>
+        <script src="render-about.js"></script>
         <script src="script.js"></script>
 
 </body>

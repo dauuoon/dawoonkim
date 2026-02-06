@@ -1,14 +1,68 @@
-/* ABOUT 콘텐츠 동적 로드 */
-$(document).ready(function() {
-  $('#about-menu-container').load('about-content.html', function(response, status, xhr) {
-    if (status === 'error') {
-      console.error('Error loading about content: ' + xhr.status + ' ' + xhr.statusText);
-    } else {
-      // 콘텐츠 로드 후 스크립트 초기화
-      initializeAboutMenu();
+/* Notion 데이터 로드 및 초기화 */
+$(document).ready(async function() {
+  try {
+    console.log("🚀 페이지 초기화 시작...");
+    
+    // about-content.html 먼저 로드
+    await new Promise((resolve, reject) => {
+      $('#about-menu-container').load('about-content.html', function(response, status, xhr) {
+        if (status === 'error') {
+          console.error('Error loading about content:', xhr.status, xhr.statusText);
+          reject(xhr);
+        } else {
+          console.log('✅ about-content.html 로드 완료');
+          resolve();
+        }
+      });
+    });
+    
+    // Notion 데이터 로드
+    const data = await loadAllData();
+    
+    // 현재 페이지 확인
+    const isVaultPage = window.location.pathname.includes('vault.html');
+    const isIndexPage = !isVaultPage;
+    
+    // 페이지별 렌더링
+    if (isIndexPage) {
+      console.log("📄 Index 페이지 렌더링");
+      if (typeof renderProjects === 'function') {
+        await renderProjects(data.projects);
+      }
+      if (typeof renderAbout === 'function') {
+        await renderAbout(data.about, data.settings);
+      }
+    } else if (isVaultPage) {
+      console.log("🖼️ Vault 페이지 렌더링");
+      if (typeof renderVault === 'function') {
+        await renderVault(data.vault);
+      }
+      if (typeof renderAbout === 'function') {
+        await renderAbout(data.about, data.settings);
+      }
     }
-  });
+    
+    console.log("✅ 페이지 초기화 완료!");
+    
+    // About 메뉴 이벤트 초기화
+    initializeAboutMenu();
+    
+  } catch (error) {
+    console.error("❌ 페이지 초기화 실패:", error);
+  }
 });
+
+/* ABOUT 콘텐츠 동적 로드 - Notion API로 대체됨 */
+// $(document).ready(function() {
+//   $('#about-menu-container').load('about-content.html', function(response, status, xhr) {
+//     if (status === 'error') {
+//       console.error('Error loading about content: ' + xhr.status + ' ' + xhr.statusText);
+//     } else {
+//       // 콘텐츠 로드 후 스크립트 초기화
+//       initializeAboutMenu();
+//     }
+//   });
+// });
 
 function initializeAboutMenu() {
   // ABOUT 메뉴 X 버튼 클릭 이벤트
@@ -339,415 +393,13 @@ document.addEventListener("DOMContentLoaded", function () {
     render.options.height = window.innerHeight;
   });
 
-  // 프로젝트 데이터 객체
-  const projectData = {
-    "IPLEX STUDIO PLATFORM": {
-      title: "IPLEX STUDIO PLATFORM",
-      subtitle: "함께 만들어가는 IP 콘텐츠, 아이플렉스 스튜디오",
-      type: "[Company Project]",
-      date: "Date : 2023.10",
-      part: "BX DESIGN (100%) GUI DESIGN (90%)", // 추가
-      client: "Client : EmoticBox Inc.",
-      color: "#622BF7",
-      mo_color: "#622BF7",
-      mo_bg: "#F7F8FA",
-      images: [
-        "img/projects/iplex/img1.png",
-        "img/projects/iplex/img2.png",
-        "img/projects/iplex/img3.png",
-        "img/projects/iplex/img4.gif",
-        "img/projects/iplex/img5.png",
-        "img/projects/iplex/img6.gif",
-        "img/projects/iplex/img7.gif",
-        "img/projects/iplex/img8.png",
-        "img/projects/iplex/img9.png",
-        "img/projects/iplex/img10.png",
-        "img/projects/iplex/img11.png",
-        "img/projects/iplex/img12.png",
-        "img/projects/iplex/img13.png",
-        "img/projects/iplex/img14.png",
-        "img/projects/iplex/img15.png",
-        "img/projects/iplex/img16.png",
-        "img/projects/iplex/img17.png",
-        "img/projects/iplex/img18.png",
-        "img/projects/iplex/img19.png",
-        "img/projects/iplex/img20.png",
-        "img/projects/iplex/img21.png",
-      ],
-    },
-
-    "99DAS PLATFORM": {
-      title: "99DAS PLATFORM WEB · APP",
-      subtitle: "인플루언서 마케팅 플랫폼, 구구다스 웹 · 앱",
-      type: "[Company Project]",
-      date: "Date : 2020.09",
-      part: "UI · GUI DESIGN (100%)",
-      client: "Client : Amazing E&M",
-      color: "#F5BCBC",
-
-      mo_color: "#FFFFFF",
-      mo_bg: "#C9292C",
-      images: [
-        "img/projects/99das/img1.png",
-        "img/projects/99das/img2.gif",
-        "img/projects/99das/img3.png",
-        "img/projects/99das/img4.png",
-        "img/projects/99das/img5.png",
-        "img/projects/99das/img6.png",
-        "img/projects/99das/img7.png",
-        "img/projects/99das/img8.png",
-        "img/projects/99das/img9.png",
-        "img/projects/99das/img10.png",
-        "img/projects/99das/img11.png",
-        "img/projects/99das/img12.png",
-        "img/projects/99das/img13.png",
-        "img/projects/99das/img14.png",
-      ],
-    },
-
-    "RIDP CMF ARCHIVE": {
-      title: "RIDP CMF ARCHIVE",
-      subtitle: "인플루언서 마케팅 플랫폼, 구구다스 웹 · 앱",
-      type: "[Company Project]",
-      date: "Date : 2022.05",
-      part: "UIUX DESIGN (70%)",
-      client: "Client : 대구경북디자인진흥원",
-      color: "#BAE14C",
-      mo_color: "#BAE14C",
-      mo_bg: "#212121",
-
-      images: [
-        "img/projects/ridp/img1.png",
-        "img/projects/ridp/img2.png",
-        "img/projects/ridp/img3.png",
-        "img/projects/ridp/img4.png",
-        "img/projects/ridp/img5.png",
-        "img/projects/ridp/img6.png",
-        "img/projects/ridp/img7.png",
-        "img/projects/ridp/img8.png",
-        "img/projects/ridp/img9.png",
-        "img/projects/ridp/img10.png",
-        "img/projects/ridp/img11.png",
-        "img/projects/ridp/img12.png",
-        "img/projects/ridp/img13.png",
-        "img/projects/ridp/img14.png",
-        "img/projects/ridp/img15.png",
-        "img/projects/ridp/img16.png",
-        "img/projects/ridp/img17.png",
-        "img/projects/ridp/img18.png",
-      ],
-    },
-
-    PALETUNE: {
-      title: "PALETUNE",
-      subtitle: "설명...",
-      type: "WEB · APP",
-      date: "2024",
-      client: "Client Name",
-      color: "#5EB6CA",
-      isLocked: false,
-    },
-  };
-
-  // 프로젝트 호버 효과
-  document.querySelectorAll(".project li").forEach((project) => {
-    project.addEventListener("mouseover", function () {
-      let color = this.getAttribute("data-color");
-      this.style.setProperty("--hover-color", color);
-
-      // 상단 텍스트만 색상 변경
-      const elements = [
-        "#clock2",
-        "#main-title",
-        "#main-title a",
-        ".header h1",
-        ".header h2",
-      ].map((selector) => document.querySelector(selector));
-
-      elements.forEach((el) => {
-        if (el) el.style.color = color;
-      });
-
-      // 현재 프로젝트의 텍스트만 색상 변경
-      this.querySelector(".project_title_blur, .project_title").style.color =
-        color;
-    });
-
-    project.addEventListener("mouseleave", function () {
-      this.style.removeProperty("--hover-color");
-
-      const elements = [
-        "#clock2",
-        "#main-title",
-        "#main-title a",
-        ".header h1",
-        ".header h2",
-      ].map((selector) => document.querySelector(selector));
-
-      elements.forEach((el) => {
-        if (el) el.style.color = "#E3C1B0";
-      });
-
-      this.querySelector(".project_title_blur, .project_title").style.color =
-        "";
-    });
-  });
-
-  // 프로젝트 클릭 이벤트 수정
-  document.querySelectorAll(".project li").forEach((project) => {
-    project.addEventListener("click", function () {
-      const projectTitle = this.querySelector(
-        ".project_title_blur"
-      ).textContent.trim();
-      const isLocked = this.querySelector('img[src="img/lock.svg"]') !== null;
-
-      if (isLocked) {
-        const popup = document.getElementById("popup-container");
-        popup.classList.remove("hidden");
-        popup.classList.add("active");
-
-        const passwordInput = document.getElementById("password-input");
-        passwordInput.value = "";
-        passwordInput.focus();
-
-        // ESC 키로 팝업 닫기
-        const escHandler = (e) => {
-          if (e.key === "Escape") {
-            closePasswordPopup();
-          }
-        };
-        document.addEventListener("keydown", escHandler);
-
-        // 팝업 배경 클릭으로 닫기
-        popup.addEventListener("click", function (e) {
-          if (e.target === popup) {
-            closePasswordPopup();
-          }
-        });
-
-        // 팝업 닫기 함수
-        function closePasswordPopup() {
-          popup.classList.remove("active");
-          popup.classList.add("hidden");
-          document.removeEventListener("keydown", escHandler);
-        }
-
-        // 비밀번호 확인 함수
-        const checkPassword = () => {
-          const password = passwordInput.value;
-          if (checkProjectPassword(password)) {
-            alert("✅ 비밀번호 확인 완료! 프로젝트를 엽니다...");
-            closePasswordPopup();
-            setTimeout(() => {
-              showProjectContent(projectTitle);
-            }, 500);
-          } else {
-            alert("❌ 비밀번호가 일치하지 않습니다. 다시 시도해주세요!");
-            passwordInput.value = "";
-            passwordInput.focus();
-          }
-        };
-
-        // 확인 버튼 클릭 이벤트
-        document.getElementById("submit-password").onclick = checkPassword;
-
-        // Enter 키 이벤트
-        passwordInput.onkeypress = function (e) {
-          if (e.key === "Enter") {
-            checkPassword();
-          }
-        };
-      } else {
-        showProjectContent(projectTitle);
-      }
-    });
-  });
-
-  // 이미지 캐시 저장소
-  const imageCache = new Map();
-
-  function showProjectContent(projectId) {
-    const project = projectData[projectId];
-    const modal = document.querySelector(".project-modal");
-
-    // 기본 정보 업데이트
-    document.documentElement.style.setProperty(
-      "--project-color",
-      project.color
-    );
-    document.documentElement.style.setProperty(
-      "--project-mo-color",
-      project.mo_color
-    );
-    document.documentElement.style.setProperty(
-      "--project-mo-bg",
-      project.mo_bg
-    );
-
-    // 프로젝트 정보 업데이트
-    modal.querySelector(".project-title").textContent = project.title;
-    modal.querySelector(".project-subtitle").textContent = project.subtitle;
-    modal.querySelector(".project-type").textContent = project.type;
-    modal.querySelector(".project-part").textContent = project.part; // 추가
-    modal.querySelector(".project-date").textContent = project.date;
-    modal.querySelector(".project-client").textContent = project.client;
-
-    const modalBody = modal.querySelector(".modal-body");
-
-    // 캐시된 이미지가 있는지 확인
-    if (imageCache.has(projectId)) {
-      modalBody.innerHTML = "";
-      modalBody.appendChild(imageCache.get(projectId));
-      modal.style.display = "block";
-      requestAnimationFrame(() => {
-        // modal.classList.add("active");
-        modal.classList.remove("disable");
-      });
-      document.body.style.overflow = "hidden";
-      return;
-    }
-
-    // 로딩 인디케이터 표시
-    modalBody.innerHTML = `
-            <div class="loading-container">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">Loading Images... <span class="loading-progress">0%</span></div>
-            </div>
-        `;
-
-    // 모달 표시
-    modal.style.display = "block";
-    requestAnimationFrame(() => {
-      //   modal.classList.add("active");
-      modal.classList.remove("disable");
-    });
-    document.body.style.overflow = "hidden";
-
-    // 이미지 프리로딩
-    const imagePromises = project.images.map((src, index) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-
-        // 이미지 최적화 설정
-        img.loading = "eager"; // 즉시 로딩으로 변경
-        img.decoding = "async";
-        img.setAttribute("importance", "high");
-
-        img.onload = () => {
-          const progress = Math.round(
-            ((index + 1) / project.images.length) * 100
-          );
-          modal.querySelector(".loading-progress").textContent = `${progress}%`;
-          resolve(img);
-        };
-
-        img.onerror = reject;
-        img.src = src;
-        img.alt = `${project.title} - image ${index + 1}`;
-      });
-    });
-
-    Promise.all(imagePromises)
-      .then((loadedImages) => {
-        const imageContainer = document.createElement("div");
-        imageContainer.className = "project-images";
-
-        loadedImages.forEach((img) => {
-          // 이미지 복제본 생성 및 속성 복사
-          const imgClone = img.cloneNode(true);
-          imgClone.style.display = "block";
-          imgClone.style.width = "100%";
-          imageContainer.appendChild(imgClone);
-        });
-
-        // 캐시에 저장
-        imageCache.set(projectId, imageContainer.cloneNode(true));
-
-        modalBody.style.opacity = "0";
-        setTimeout(() => {
-          modalBody.innerHTML = "";
-          modalBody.appendChild(imageContainer);
-          modalBody.style.opacity = "1";
-        }, 300);
-      })
-      .catch((error) => {
-        console.error("이미지 로딩 실패:", error);
-        modalBody.innerHTML =
-          '<div class="error-message">이미지를 불러오는데 실패했습니다.</div>';
-      });
-    const scrollableDivs = document.querySelectorAll(".project-images");
-    scrollableDivs.forEach((div) => {
-      div.addEventListener("scroll", function () {
-        console.log("현재 스크롤 중인 div:", div);
-      });
-    });
-  }
-
-  // 스크롤 최적화 함수
-  function optimizeScroll() {
-    const modalContent = document.querySelector(".modal-content");
-    let ticking = false;
-
-    modalContent.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            // 현재 보이는 이미지만 높은 품질로 유지
-            const images = document.querySelectorAll(".project-images img");
-            images.forEach((img) => {
-              const rect = img.getBoundingClientRect();
-              const isVisible =
-                rect.top >= -rect.height &&
-                rect.bottom <= window.innerHeight + rect.height;
-
-              if (isVisible) {
-                img.style.willChange = "transform"; // 성능 최적화
-              } else {
-                img.style.willChange = "auto";
-              }
-            });
-
-            ticking = false;
-          });
-
-          ticking = true;
-        }
-      },
-      { passive: true }
-    ); // 스크롤 성능 향상
-  }
-
-  // 이미지 인터섹션 옵저버 설정
-  const imageObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          // 이미지가 뷰포트에 들어올 때 고품질 유지
-          img.style.willChange = "transform";
-        } else {
-          const img = entry.target;
-          // 이미지가 뷰포트를 벗어날 때 최적화
-          img.style.willChange = "auto";
-        }
-      });
-    },
-    {
-      rootMargin: "50px 0px",
-      threshold: 0.1,
-    }
-  );
-
-  // 모달 닫기 시 애니메이션
+  // 모달 닫기 시 애니메이션 (render-projects.js와 연동)
   document.querySelector(".modal-close").addEventListener("click", function () {
     const modal = document.querySelector(".project-modal");
-    // modal.classList.remove("active");
     modal.classList.add("disable");
     setTimeout(() => {
       modal.style.display = "none";
       document.body.style.overflow = "";
-      // 모달 내용은 유지
     }, 800);
   });
 
@@ -1215,9 +867,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const hashedInput = CryptoJS.MD5(password).toString();
       console.log("입력된 비밀번호 해시:", hashedInput);
-      console.log("저장된 VAULT 해시:", PASSWORDS.VAULT);
+      console.log("저장된 VAULT 해시:", window.NOTION_PASSWORD_HASH);
 
-      if (hashedInput === PASSWORDS.VAULT) {
+      if (hashedInput === window.NOTION_PASSWORD_HASH) {
         // 비밀번호가 일치하면
         console.log("✅ 비밀번호 일치!");
         popup.classList.remove("active");
@@ -1282,67 +934,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  // 모든 study-item에 클릭 이벤트 추가
-  const studyItems = document.querySelectorAll(".study-item");
-
-  studyItems.forEach((item) => {
-    item.addEventListener("click", function () {
-      const existingPopup = document.querySelector(".study-popup");
-      if (existingPopup) {
-        existingPopup.remove();
-      }
-
-      const popup = document.createElement("div");
-      popup.className = "study-popup";
-
-      const content = document.createElement("div");
-      content.className = "study-popup-content";
-
-      const img = document.createElement("img");
-      img.src = this.dataset.fullImage;
-      content.appendChild(img);
-
-      const closeBtn = document.createElement("div");
-      closeBtn.className = "study-popup-close";
-
-      popup.appendChild(content);
-      popup.appendChild(closeBtn);
-      document.body.appendChild(popup);
-
-      // 강제 리플로우를 통해 트랜지션이 적용되도록 함
-      popup.offsetHeight;
-      requestAnimationFrame(() => popup.classList.add("active"));
-
-      const closePopup = () => {
-        popup.classList.remove("active");
-        // 트랜지션이 끝난 후 요소 제거
-        setTimeout(() => {
-          popup.remove();
-          document.body.classList.remove("modal-open-study"); // 스크롤 활성화를 위해 클래스 제거
-        }, 300); // 트랜지션 시간과 동일하게 설정
-
-        document.removeEventListener("keydown", handleEsc);
-        closeBtn.removeEventListener("click", closePopup);
-        popup.removeEventListener("click", handleOutsideClick);
-      };
-
-      const handleEsc = (e) => {
-        if (e.key === "Escape") closePopup();
-      };
-
-      const handleOutsideClick = (e) => {
-        if (e.target === popup) closePopup();
-      };
-
-      document.addEventListener("keydown", handleEsc);
-      closeBtn.addEventListener("click", closePopup);
-      popup.addEventListener("click", handleOutsideClick);
-
-      // 여기서 body에 클래스 추가
-      document.body.classList.add("modal-open-study"); // 뒷 배경 스크롤 비활성화를 위한 클래스 추가
-    });
-  });
 
   // vault 페이지 진입 시 즉시 비밀번호 체크
   if (window.location.pathname.includes("vault.html")) {
@@ -1429,6 +1020,6 @@ function checkProjectPassword(input) {
   // 입력값과 저장된 해시값 비교
   const hashedInput = CryptoJS.MD5(input).toString();
   console.log("Entered hash:", hashedInput); // 디버깅용
-  console.log("Stored hash:", PASSWORDS.PROJECT); // 디버깅용
-  return hashedInput === PASSWORDS.PROJECT;
+  console.log("Stored hash:", window.NOTION_PASSWORD_HASH); // Notion에서 가져온 해시 사용
+  return hashedInput === window.NOTION_PASSWORD_HASH;
 }

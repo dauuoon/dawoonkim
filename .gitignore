@@ -1,0 +1,26 @@
+# Notion API 설정 파일 (민감 정보 포함)
+config.js
+
+# 기존 백업 파일 (더 이상 사용 안 함)
+passwords.js
+passwords.js.backup
+about-content.html.backup
+notion-api-old.js.backup
+
+# 로컬 테스트용 환경 변수
+.env
+
+# Notion 설정 가이드 (로컬용)
+QUICKSTART.md
+NOTION_SETUP.md
+
+# macOS
+.DS_Store
+
+# 에디터
+.vscode/
+.idea/
+
+# 임시 파일
+*.log
+*.tmp
