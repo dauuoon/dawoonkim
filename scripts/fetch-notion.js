@@ -80,7 +80,7 @@ function getDateOrText(property) {
 
 // 프로젝트 데이터 가져오기
 async function getProjects() {
-  const results = await queryDatabase(PROJECTS_DB, [{ property: 'ORDER', direction: 'descending' }]);
+  const results = await queryDatabase(PROJECTS_DB, [{ property: 'Order', direction: 'descending' }]);
   
   return results.map(page => {
     const props = page.properties;
@@ -113,7 +113,7 @@ async function getProjects() {
 
 // ABOUT 데이터 가져오기
 async function getAboutData() {
-  const results = await queryDatabase(ABOUT_DB, [{ property: 'FROM_DATE', direction: 'descending' }]);
+  const results = await queryDatabase(ABOUT_DB, [{ property: 'StartDate', direction: 'descending' }]);
   
   return results.map(page => {
     const props = page.properties;
@@ -131,7 +131,7 @@ async function getAboutData() {
 
 // VAULT 데이터 가져오기
 async function getVaultData() {
-  const results = await queryDatabase(VAULT_DB, [{ property: 'ORDER', direction: 'descending' }]);
+  const results = await queryDatabase(VAULT_DB, [{ property: 'Order', direction: 'descending' }]);
   
   return results.map(page => {
     const props = page.properties;
