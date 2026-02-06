@@ -49,7 +49,7 @@ async function loadAllData() {
   try {
     const data = await loadNotionData();
     
-    // 패스워드 설정
+    // 패스워드 설정 (SETTINGS DB에 평문 저장, 여기서 MD5 해싱)
     if (data.settings && data.settings.PASSWORD) {
       window.NOTION_PASSWORD_HASH = CryptoJS.MD5(data.settings.PASSWORD).toString();
       console.log('✅ 패스워드 설정 완료');
