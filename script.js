@@ -842,6 +842,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  window.PASSWORD_AUTHORIZED = window.PASSWORD_AUTHORIZED || false;
+
   // Vault 페이지 비밀번호 체크
   if (currentPage === "vault.html") {
     const vaultContent = document.querySelector(".vault-content");
@@ -878,7 +880,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.overflow = "auto";
         if (nav) nav.style.display = "flex";
         if (footer) footer.style.display = "block";
-        sessionStorage.setItem("vaultAuthorized", "true");
+        window.PASSWORD_AUTHORIZED = true;
         document.documentElement.style.display = "block";
       } else {
         console.log("❌ 비밀번호 불일치!");
@@ -889,7 +891,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 페이지 로드 시 팝업 표시 여부 결정
-    const isAuthorized = sessionStorage.getItem("vaultAuthorized");
+    const isAuthorized = window.PASSWORD_AUTHORIZED === true;
     console.log("이미 인증됨?", isAuthorized);
 
     if (!isAuthorized) {
@@ -943,7 +945,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function checkVaultAuthorization() {
   // 이미 인증된 상태인지 확인
-  const isAuthorized = sessionStorage.getItem("vaultAuthorized");
+  const isAuthorized = window.PASSWORD_AUTHORIZED === true;
   if (!isAuthorized) {
     // 인증되지 않은 경우 팝업 표시
     document.getElementById("vault-popup-container").classList.remove("hidden");
@@ -957,7 +959,7 @@ function checkVaultAuthorization() {
 function handleVaultAuthorization() {
   // 비밀번호 확인 로직...
   if (passwordIsCorrect) {
-    sessionStorage.setItem("vaultAuthorized", "true");
+    window.PASSWORD_AUTHORIZED = true;
     document.getElementById("vault-popup-container").classList.add("hidden");
     document.querySelector(".vault-content").classList.add("authorized");
   }
@@ -977,7 +979,7 @@ function closeModal() {
 
 document.addEventListener("DOMContentLoaded", function () {
   if (window.location.pathname.includes("vault.html")) {
-    const isAuthorized = sessionStorage.getItem("vaultAuthorized");
+    const isAuthorized = window.PASSWORD_AUTHORIZED === true;
     const popupContainer = document.getElementById("vault-popup-container");
     const vaultContent = document.querySelector(".vault-content");
 

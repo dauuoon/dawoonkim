@@ -1,4 +1,5 @@
 // 프로젝트 동적 렌더링
+window.PASSWORD_AUTHORIZED = window.PASSWORD_AUTHORIZED || false;
 
 // 프로젝트 HTML 생성
 function createProjectHTML(project) {
@@ -118,7 +119,9 @@ function initProjectEvents() {
       
       console.log(`프로젝트 클릭: ${projectTitle}, 잠금: ${isLocked}`);
 
-      if (isLocked) {
+      const isAuthorized = window.PASSWORD_AUTHORIZED === true;
+
+      if (isLocked && !isAuthorized) {
         console.log('비밀번호 팝업 호출');
         showPasswordPopup(projectTitle);
       } else {
@@ -165,6 +168,7 @@ function showPasswordPopup(projectTitle) {
   // 기존 이벤트 리스너 제거
   submitBtn.onclick = null;
   passwordInput.onkeypress = null;
+  popup.onclick = null;
 
   const closePasswordPopup = () => {
     popup.classList.remove("active");
@@ -182,6 +186,7 @@ function showPasswordPopup(projectTitle) {
     const password = passwordInput.value;
     console.log('비밀번호 확인:', password);
     if (checkProjectPassword(password)) {
+      window.PASSWORD_AUTHORIZED = true;
       alert("✅ 비밀번호 확인 완료! 프로젝트를 엽니다...");
       closePasswordPopup();
       setTimeout(() => {
@@ -196,26 +201,28 @@ function showPasswordPopup(projectTitle) {
 
   // 새로운 이벤트 리스너 등록
   console.log('이벤트 리스너 등록 시작');
-  submitBtn.addEventListener("click", checkPassword);
+  submitBtn.onclick = checkPassword;
   
-  passwordInput.addEventListener("keypress", (e) => {
+  passwordInput.onkeypress = (e) => {
     if (e.key === "Enter") {
       checkPassword();
     }
-  });
+  };
 
-  document.addEventListener("keydown", escHandler);
+  document.addEventListener("keydown", escHandler, { once: true });
 
-  popup.addEventListener("click", (e) => {
+  popup.onclick = (e) => {
     if (e.target === popup) {
       closePasswordPopup();
     }
-  });
+  };
   
   console.log('이벤트 리스너 등록 완료');
 }
 
 // 프로젝트 상세 표시
+let modalLoadToken = 0;
+
 function showProjectContent(projectTitle) {
   const project = window.projectsData[projectTitle];
   if (!project) {
@@ -251,6 +258,8 @@ function showProjectContent(projectTitle) {
   });
   document.body.style.overflow = "hidden";
 
+  const currentToken = ++modalLoadToken;
+
   const imagePromises = project.images.map((src, index) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -273,6 +282,7 @@ function showProjectContent(projectTitle) {
 
   Promise.all(imagePromises)
     .then((loadedImages) => {
+      if (currentToken !== modalLoadToken) return;
       const imageContainer = document.createElement("div");
       imageContainer.className = "project-images";
 
@@ -291,6 +301,7 @@ function showProjectContent(projectTitle) {
       }, 300);
     })
     .catch((error) => {
+      if (currentToken !== modalLoadToken) return;
       console.error("이미지 로딩 실패:", error);
       modalBody.innerHTML = '<div class="error-message">이미지를 불러오는데 실패했습니다.</div>';
     });
