@@ -53,6 +53,7 @@ async function loadAllData() {
     if (data.settings && data.settings.PASSWORD) {
       window.NOTION_PASSWORD_HASH = CryptoJS.MD5(data.settings.PASSWORD).toString();
       console.log('✅ 패스워드 설정 완료');
+      console.log('NOTION_PASSWORD_HASH:', window.NOTION_PASSWORD_HASH);
     } else {
       console.warn('⚠️ SETTINGS에서 패스워드를 찾을 수 없습니다');
     }

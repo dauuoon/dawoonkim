@@ -120,10 +120,14 @@ function initProjectEvents() {
         ".project_title_blur, .project_title"
       ).textContent.trim();
       const isLocked = this.querySelector('img[src="img/lock.svg"]') !== null;
+      
+      console.log(`프로젝트 클릭: ${projectTitle}, 잠금: ${isLocked}`);
 
       if (isLocked) {
+        console.log('비밀번호 팝업 호출');
         showPasswordPopup(projectTitle);
       } else {
+        console.log('프로젝트 콘텐츠 표시');
         showProjectContent(projectTitle);
       }
     });
@@ -133,8 +137,15 @@ function initProjectEvents() {
 // 비밀번호 팝업 표시
 function showPasswordPopup(projectTitle) {
   const popup = document.getElementById("popup-container");
+  console.log('popup 요소:', popup); // 디버깅용
+  if (!popup) {
+    console.error('❌ popup-container를 찾을 수 없습니다!');
+    return;
+  }
+  
   popup.classList.remove("hidden");
   popup.classList.add("active");
+  console.log('✅ 비밀번호 팝업이 표시되었습니다');
 
   const passwordInput = document.getElementById("password-input");
   passwordInput.value = "";

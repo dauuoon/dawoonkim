@@ -1019,7 +1019,8 @@ function md5(string) {
 function checkProjectPassword(input) {
   // 입력값과 저장된 해시값 비교
   const hashedInput = CryptoJS.MD5(input).toString();
-  console.log("Entered hash:", hashedInput); // 디버깅용
-  console.log("Stored hash:", window.NOTION_PASSWORD_HASH); // Notion에서 가져온 해시 사용
+  console.log("입력 해시:", hashedInput); // 디버깅용
+  console.log("저장된 해시:", window.NOTION_PASSWORD_HASH); // Notion에서 가져온 해시 사용
+  console.log("일치 여부:", hashedInput === window.NOTION_PASSWORD_HASH);
   return hashedInput === window.NOTION_PASSWORD_HASH;
 }
