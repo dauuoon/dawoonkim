@@ -86,7 +86,7 @@ async function getProjects() {
     const props = page.properties;
     return {
       id: getRichText(props['Project ID']) || page.id,
-      title: getTitleText(props.Name),
+      title: getRichText(props.Title) || getTitleText(props.Title),
       subtitle: getRichText(props.Subtitle),
       description: getRichText(props.Description),
       date: getRichText(props.Date),
@@ -119,7 +119,7 @@ async function getAboutData() {
     const props = page.properties;
     return {
       section: getSelectName(props.Section),
-      title: getTitleText(props.Name) || getRichText(props.Name),
+      title: getRichText(props.Title) || getTitleText(props.Title),
       startDate: getDateOrText(props.StartDate),
       endDate: getDateOrText(props.EndDate),
       detail: getRichText(props.Detail),
@@ -136,8 +136,8 @@ async function getVaultData() {
   return results.map(page => {
     const props = page.properties;
     return {
-      id: getRichText(props.ID),
-      title: getTitleText(props.Name) || getRichText(props.Name),
+      id: page.id,
+      title: '',
       thumbnailImage: extractImageUrl(props.ThumbnailImage),
       fullImage: extractImageUrl(props.FullImage),
       order: getNumberValue(props.Order) || 0
