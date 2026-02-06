@@ -131,6 +131,9 @@ function initProjectEvents() {
 
 // 비밀번호 팝업 표시
 function showPasswordPopup(projectTitle) {
+  console.log('✅ showPasswordPopup 함수 시작');
+  console.log('projectTitle:', projectTitle);
+  
   const popup = document.getElementById("popup-container");
   console.log('popup 요소:', popup);
   
@@ -139,12 +142,22 @@ function showPasswordPopup(projectTitle) {
     return;
   }
   
+  console.log('현재 popup 클래스:', popup.className);
   popup.classList.remove("hidden");
   popup.classList.add("active");
+  console.log('수정 후 popup 클래스:', popup.className);
   console.log('✅ 비밀번호 팝업이 표시되었습니다');
 
   const passwordInput = document.getElementById("password-input");
+  console.log('passwordInput 요소:', passwordInput);
+  
   const submitBtn = document.getElementById("submit-password");
+  console.log('submitBtn 요소:', submitBtn);
+  
+  if (!passwordInput || !submitBtn) {
+    console.error('❌ passwordInput 또는 submitBtn을 찾을 수 없습니다!');
+    return;
+  }
   
   passwordInput.value = "";
   passwordInput.focus();
@@ -167,6 +180,7 @@ function showPasswordPopup(projectTitle) {
 
   const checkPassword = () => {
     const password = passwordInput.value;
+    console.log('비밀번호 확인:', password);
     if (checkProjectPassword(password)) {
       alert("✅ 비밀번호 확인 완료! 프로젝트를 엽니다...");
       closePasswordPopup();
@@ -181,6 +195,7 @@ function showPasswordPopup(projectTitle) {
   };
 
   // 새로운 이벤트 리스너 등록
+  console.log('이벤트 리스너 등록 시작');
   submitBtn.addEventListener("click", checkPassword);
   
   passwordInput.addEventListener("keypress", (e) => {
@@ -196,6 +211,8 @@ function showPasswordPopup(projectTitle) {
       closePasswordPopup();
     }
   });
+  
+  console.log('이벤트 리스너 등록 완료');
 }
 
 // 프로젝트 상세 표시
