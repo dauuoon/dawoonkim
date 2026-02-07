@@ -1,389 +1,190 @@
 {
   "projects": [
     {
-      "id": "2ff030b0-2c9b-8020-8491-ec8b27b20b2c",
-      "title": "WHY BOX",
-      "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구",
-      "description": "",
-      "date": "Date : 2025.12",
-      "projectType": "[Personal Project]",
-      "part": "BX · UIUX DESIGN (100%) DEVELOPMENT (100%)",
-      "client": "Client : Academic Project",
-      "tags": [],
-      "status": "UNLOCKED",
-      "thumbColor": "#FD895F",
-      "mainColor": "#FD895F",
-      "modalTextColor": "#FD895F",
-      "modalBgColor": "#FFFFFF",
-      "thumbnailImage": null,
-      "coverImage": null,
-      "images": [
-        "img/projects/whybox/img1.gif",
-        "img/projects/whybox/img2.jpg",
-        "img/projects/whybox/img3.jpg",
-        "img/projects/whybox/img4.jpg",
-        "img/projects/whybox/img5.jpg",
-        "img/projects/whybox/img6.jpg",
-        "img/projects/whybox/img7.jpg",
-        "img/projects/whybox/img8.jpg",
-        "img/projects/whybox/img9.jpg",
-        "img/projects/whybox/img10.jpg",
-        "img/projects/whybox/img11.jpg",
-        "img/projects/whybox/img12.jpg",
-        "img/projects/whybox/img13.jpg",
-        "img/projects/whybox/img14.jpg",
-        "img/projects/whybox/img15.jpg",
-        "img/projects/whybox/img16.gif",
-        "img/projects/whybox/img17.jpg",
-        "img/projects/whybox/img18.jpg",
-        "img/projects/whybox/img19.jpg",
-        "img/projects/whybox/img20.jpg",
-        "img/projects/whybox/img21.jpg",
-        "img/projects/whybox/img22.jpg",
-        "img/projects/whybox/img23.jpg",
-        "img/projects/whybox/img24.jpg",
-        "img/projects/whybox/img25.jpg",
-        "img/projects/whybox/img26.jpg",
-        "img/projects/whybox/img27.jpg"
+      "Category": [
+        "STUDY"
       ],
-      "order": 5,
-      "number": "05",
-      "year": "2025",
-      "techType": "WEB",
-      "category": "STUDY"
+      "ModalTextColor": "#00A2F3",
+      "Date": "Date : 2025.08",
+      "ThumbColor": "#00A2F3",
+      "MainColor": "#00A2F3",
+      "Title": "VALOO-ACT WORKSHEET",
+      "Subtitle": "수용전념치료(ACT) 가치 명확화 디지털 인터페이스 도구",
+      "Client": "Client : Academic Project",
+      "TechType": [
+        "APP"
+      ],
+      "Status": "UNLOCKED",
+      "Order": 4,
+      "ProjectType": "[Team Project]",
+      "Part": "BX · UIUX DESIGN (60%) DEVELOPMENT (30%)",
+      "ModalBgColor": "#DFEFF6",
+      "Number": "04",
+      "Year": 2025,
+      "Project ID": "proj_004",
+      "images": []
     },
     {
-      "id": "2ff030b0-2c9b-8006-bf47-e9ab4d00e8b9",
-      "title": "VALOO-ACT WORKSHEET",
-      "subtitle": "수용전념치료(ACT) 가치 명확화 디지털 인터페이스 도구",
-      "description": "",
-      "date": "Date : 2025.08",
-      "projectType": "[Team Project]",
-      "part": "BX · UIUX DESIGN (60%) DEVELOPMENT (30%)",
-      "client": "Client : Academic Project",
-      "tags": [],
-      "status": "UNLOCKED",
-      "thumbColor": "#00A2F3",
-      "mainColor": "#00A2F3",
-      "modalTextColor": "#00A2F3",
-      "modalBgColor": "#DFEFF6",
-      "thumbnailImage": null,
-      "coverImage": null,
-      "images": [
-        "img/projects/valoo/img1.jpg",
-        "img/projects/valoo/img2.jpg",
-        "img/projects/valoo/img3.jpg"
+      "Category": [
+        "STUDY"
       ],
-      "order": 4,
-      "number": "04",
-      "year": "2025",
-      "techType": "APP",
-      "category": "STUDY"
-    },
-    {
-      "id": "2ff030b0-2c9b-80dc-9d05-f3d7780e5703",
-      "title": "IPLEX STUDIO PLATFORM",
-      "subtitle": "함께 만들어가는 IP 콘텐츠, 아이플렉스 스튜디오",
-      "description": "",
-      "date": "Date : 2023.10",
-      "projectType": "[Company Project]",
-      "part": "BX DESIGN (100%) UIUX DESIGN (90%)",
-      "client": "Client : EmoticBox Inc.",
-      "tags": [],
-      "status": "LOCKED",
-      "thumbColor": "#622BF7",
-      "mainColor": "#622BF7",
-      "modalTextColor": "#622BF7",
-      "modalBgColor": "#F7F8FA",
-      "thumbnailImage": null,
-      "coverImage": null,
-      "images": [
-        "img/projects/iplex/img1.jpg",
-        "img/projects/iplex/img2.jpg",
-        "img/projects/iplex/img3.jpg",
-        "img/projects/iplex/img4.gif",
-        "img/projects/iplex/img5.jpg",
-        "img/projects/iplex/img6.gif",
-        "img/projects/iplex/img7.gif",
-        "img/projects/iplex/img8.jpg",
-        "img/projects/iplex/img9.jpg",
-        "img/projects/iplex/img10.jpg",
-        "img/projects/iplex/img11.jpg",
-        "img/projects/iplex/img12.jpg",
-        "img/projects/iplex/img13.jpg",
-        "img/projects/iplex/img14.jpg",
-        "img/projects/iplex/img15.jpg",
-        "img/projects/iplex/img16.jpg",
-        "img/projects/iplex/img17.jpg",
-        "img/projects/iplex/img18.jpg",
-        "img/projects/iplex/img19.jpg",
-        "img/projects/iplex/img20.jpg"
+      "ModalTextColor": "#FD895F",
+      "Date": "Date : 2025.12",
+      "ThumbColor": "#FD895F",
+      "MainColor": "#FD895F",
+      "Title": "WHY BOX",
+      "Subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구",
+      "Client": "Client : Academic Project",
+      "TechType": [
+        "WEB"
       ],
-      "order": 3,
-      "number": "03",
-      "year": "2023",
-      "techType": "WEB",
-      "category": "WORK"
-    },
-    {
-      "id": "2ff030b0-2c9b-801c-832a-c42fe9993ed7",
-      "title": "RIDP CMF ARCHIVE",
-      "subtitle": "CMF 아카이브 웹",
-      "description": "",
-      "date": "Date : 2022.05",
-      "projectType": "[Company Project]",
-      "part": "UIUX DESIGN (70%)",
-      "client": "Client : 대구경북디자인진흥원",
-      "tags": [],
-      "status": "LOCKED",
-      "thumbColor": "#BAE14C",
-      "mainColor": "#BAE14C",
-      "modalTextColor": "#BAE14C",
-      "modalBgColor": "#212121",
-      "thumbnailImage": null,
-      "coverImage": null,
-      "images": [
-        "img/projects/ridp/img1.jpg",
-        "img/projects/ridp/img2.jpg",
-        "img/projects/ridp/img3.jpg",
-        "img/projects/ridp/img4.jpg",
-        "img/projects/ridp/img5.jpg",
-        "img/projects/ridp/img6.jpg",
-        "img/projects/ridp/img7.jpg",
-        "img/projects/ridp/img8.jpg",
-        "img/projects/ridp/img9.jpg",
-        "img/projects/ridp/img10.jpg",
-        "img/projects/ridp/img11.jpg",
-        "img/projects/ridp/img12.jpg",
-        "img/projects/ridp/img13.jpg",
-        "img/projects/ridp/img14.jpg",
-        "img/projects/ridp/img15.jpg",
-        "img/projects/ridp/img16.jpg",
-        "img/projects/ridp/img17.jpg",
-        "img/projects/ridp/img18.jpg"
-      ],
-      "order": 2,
-      "number": "02",
-      "year": "2022",
-      "techType": "WEB",
-      "category": "WORK"
-    },
-    {
-      "id": "2ff030b0-2c9b-804e-ac00-c5f55e44403d",
-      "title": "99DAS PLATFORM",
-      "subtitle": "인플루언서 마케팅 플랫폼, 구구다스",
-      "description": "",
-      "date": "Date : 2020.09",
-      "projectType": "[Company Project]",
-      "part": "UIUX DESIGN (100%)",
-      "client": "Client : Amazing E&M",
-      "tags": [],
-      "status": "LOCKED",
-      "thumbColor": "#E14C4C",
-      "mainColor": "#F5BCBC",
-      "modalTextColor": "#FFFFFF",
-      "modalBgColor": "#C9292C",
-      "thumbnailImage": null,
-      "coverImage": null,
-      "images": [
-        "img/projects/99das/img1.jpg",
-        "img/projects/99das/img2.gif",
-        "img/projects/99das/img3.jpg",
-        "img/projects/99das/img4.jpg",
-        "img/projects/99das/img5.jpg",
-        "img/projects/99das/img6.jpg",
-        "img/projects/99das/img7.jpg",
-        "img/projects/99das/img8.jpg",
-        "img/projects/99das/img9.jpg",
-        "img/projects/99das/img10.jpg",
-        "img/projects/99das/img11.jpg",
-        "img/projects/99das/img12.jpg",
-        "img/projects/99das/img13.jpg",
-        "img/projects/99das/img14.jpg"
-      ],
-      "order": 1,
-      "number": "01",
-      "year": "2020",
-      "techType": "WEB · APP",
-      "category": "WORK"
+      "Status": "UNLOCKED",
+      "Order": 5,
+      "ProjectType": "[Personal Project]",
+      "Part": "BX · UIUX DESIGN (100%) DEVELOPMENT (100%)",
+      "ModalBgColor": "#FFFFFF",
+      "Number": "05",
+      "Year": 2025,
+      "Project ID": "proj_005",
+      "images": []
     }
   ],
   "about": [
     {
-      "section": "RESEARCH",
-      "title": "Effects of a Question-Based AI Self-Feedback Tool ···",
-      "startDate": "2026.02",
-      "endDate": "",
-      "detail": "",
-      "link": "",
-      "order": 0
+      "StartDate": "2024.12",
+      "Section": "CERTIFICATE",
+      "Detail": "Engineer",
+      "Link": null,
+      "Title": "Service Experience Design",
+      "EndDate": "",
+      "ID": "ce_1"
     },
     {
-      "section": "RESEARCH",
-      "title": "A Comparative Study on User Perception ···",
-      "startDate": "2025.11",
-      "endDate": "",
-      "detail": "",
-      "link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003258636",
-      "order": 0
+      "StartDate": "2017.08",
+      "Section": "CERTIFICATE",
+      "Detail": "Industrial Engineer",
+      "Link": null,
+      "Title": "Colorist",
+      "EndDate": "",
+      "ID": "ce_2"
     },
     {
-      "section": "EDUCATION",
-      "title": "EWHA WOMANS Univ.",
-      "startDate": "2025.03",
-      "endDate": "",
-      "detail": "Media Interaction Design",
-      "link": "",
-      "order": 0
+      "StartDate": "2026.02",
+      "Section": "RESEARCH",
+      "Detail": "",
+      "Link": null,
+      "Title": "Effects of a Question-Based AI Self-Feedback Tool ···",
+      "EndDate": "",
+      "ID": "re_2"
     },
     {
-      "section": "CERTIFICATE",
-      "title": "Service Experience Design",
-      "startDate": "2024.12",
-      "endDate": "",
-      "detail": "Engineer",
-      "link": "",
-      "order": 0
+      "StartDate": "2012.02",
+      "Section": "EDUCATION",
+      "Detail": "Digital Design",
+      "Link": null,
+      "Title": "DAEGU CATHOLIC Univ.",
+      "EndDate": "2017.02",
+      "ID": "ed_2"
     },
     {
-      "section": "EXPERIENCE",
-      "title": "SOTONGFIVE,",
-      "startDate": "2019.02",
-      "endDate": "2024.08",
-      "detail": "UXUI Lead Designer",
-      "link": "",
-      "order": 0
+      "StartDate": "2025.11",
+      "Section": "RESEARCH",
+      "Detail": "",
+      "Link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003258636",
+      "Title": "A Comparative Study on User Perception ···",
+      "EndDate": "",
+      "ID": "re_1"
     },
     {
-      "section": "CERTIFICATE",
-      "title": "Colorist",
-      "startDate": "2017.08",
-      "endDate": "",
-      "detail": "Industrial Engineer",
-      "link": "",
-      "order": 0
+      "StartDate": "2025.03",
+      "Section": "EDUCATION",
+      "Detail": "Media Interaction Design",
+      "Link": null,
+      "Title": "EWHA WOMANS Univ.",
+      "EndDate": "",
+      "ID": "ed_1"
     },
     {
-      "section": "EXPERIENCE",
-      "title": "BrandAcumen,",
-      "startDate": "2017.02",
-      "endDate": "2018.02",
-      "detail": "BX Designer",
-      "link": "",
-      "order": 0
+      "StartDate": "2019.02",
+      "Section": "EXPERIENCE",
+      "Detail": "UXUI Lead Designer",
+      "Link": null,
+      "Title": "SOTONGFIVE,",
+      "EndDate": "2024.08",
+      "ID": "ex_1"
     },
     {
-      "section": "EDUCATION",
-      "title": "DAEGU CATHOLIC Univ.",
-      "startDate": "2012.02",
-      "endDate": "2017.02",
-      "detail": "Digital Design",
-      "link": "",
-      "order": 0
+      "StartDate": "2017.02",
+      "Section": "EXPERIENCE",
+      "Detail": "BX Designer",
+      "Link": null,
+      "Title": "BrandAcumen,",
+      "EndDate": "2018.02",
+      "ID": "ex_2"
     }
   ],
   "vault": [
     {
-      "id": "2ff030b0-2c9b-80ca-90af-fd76916902c4",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault14.png",
-      "fullImage": "path/full/vault/vault14.png",
-      "order": 14
+      "Order": 1,
+      "ID": "va_1"
     },
     {
-      "id": "2ff030b0-2c9b-80b7-b088-dc02e3bc3f4d",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault13.png",
-      "fullImage": "path/full/vault/vault13.png",
-      "order": 13
+      "Order": 2,
+      "ID": "va_2"
     },
     {
-      "id": "2ff030b0-2c9b-8073-9a88-fc75b92e12c7",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault12.png",
-      "fullImage": "path/full/vault/vault12.png",
-      "order": 12
+      "Order": 3,
+      "ID": "va_3"
     },
     {
-      "id": "2ff030b0-2c9b-8090-8629-f7feda91c25e",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault11.png",
-      "fullImage": "path/full/vault/vault11.png",
-      "order": 11
+      "Order": 4,
+      "ID": "va_4"
     },
     {
-      "id": "2ff030b0-2c9b-8040-98a4-d97a53396500",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault10.png",
-      "fullImage": "path/full/vault/vault10.png",
-      "order": 10
+      "Order": 5,
+      "ID": "va_5"
     },
     {
-      "id": "2ff030b0-2c9b-80c7-a975-e93c9e2f1519",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault9.png",
-      "fullImage": "path/full/vault/vault9.png",
-      "order": 9
+      "Order": 6,
+      "ID": "va_6"
     },
     {
-      "id": "2ff030b0-2c9b-802c-ab1c-d04e0c9912e2",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault8.png",
-      "fullImage": "path/full/vault/vault8.png",
-      "order": 8
+      "Order": 7,
+      "ID": "va_7"
     },
     {
-      "id": "2ff030b0-2c9b-8069-b02f-d4235b62ac2b",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault7.png",
-      "fullImage": "path/full/vault/vault7.png",
-      "order": 7
+      "Order": 8,
+      "ID": "va_8"
     },
     {
-      "id": "2ff030b0-2c9b-804d-8341-fe8cb72a4576",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault6.png",
-      "fullImage": "path/full/vault/vault6.png",
-      "order": 6
+      "Order": 9,
+      "ID": "va_9"
     },
     {
-      "id": "2ff030b0-2c9b-801c-943d-d5cc8006ab46",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault5.png",
-      "fullImage": "path/full/vault/vault5.png",
-      "order": 5
+      "Order": 10,
+      "ID": "va_10"
     },
     {
-      "id": "2ff030b0-2c9b-8003-82c9-d33c3e0cdc22",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault4.png",
-      "fullImage": "path/full/vault/vault4.png",
-      "order": 4
+      "Order": 11,
+      "ID": "va_11"
     },
     {
-      "id": "2ff030b0-2c9b-8056-8cf1-dbc7b2b5d494",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault3.png",
-      "fullImage": "path/full/vault/vault3.png",
-      "order": 3
+      "Order": 12,
+      "ID": "va_12"
     },
     {
-      "id": "2ff030b0-2c9b-8062-8000-d8fb9af4049c",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault2.png",
-      "fullImage": "path/full/vault/vault2.png",
-      "order": 2
+      "Order": 13,
+      "ID": "va_13"
     },
     {
-      "id": "2ff030b0-2c9b-8095-8f0c-e4a0c1057382",
-      "title": "",
-      "thumbnailImage": "path/thumbnail/vault/vault1.png",
-      "fullImage": "path/full/vault/vault1.png",
-      "order": 1
+      "Order": 14,
+      "ID": "va_14"
     }
   ],
   "settings": {
-    "TOTAL_PROJECTS_COUNT": "119"
+    "Value": "26d01",
+    "UpdatedDate": "2026-02-06",
+    "Key": "PASSWORD"
   },
-  "lastUpdated": "2026-02-07T08:49:53.898Z"
+  "lastUpdated": "2026-02-07T14:30:40.617Z"
 }
