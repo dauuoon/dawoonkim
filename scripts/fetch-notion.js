@@ -31,6 +31,15 @@ const PROJECT_FOLDER_MAP = {
   '05': 'whybox'
 };
 
+// 프로젝트별 이미지 개수 및 확장자 (실제 파일 기준)
+const PROJECT_IMAGE_INFO = {
+  '01': { count: 14, extensions: ['jpg'] },
+  '02': { count: 18, extensions: ['jpg'] },
+  '03': { count: 21, extensions: ['gif', 'jpg'] }, // iplex: gif와 jpg 혼용
+  '04': { count: 3, extensions: ['jpg'] },
+  '05': { count: 27, extensions: ['gif', 'jpg'] }  // whybox: img1~16은 gif 또는 jpg
+};
+
 // 환경 변수 검증
 if (!NOTION_TOKEN) {
   console.error('❌ NOTION_TOKEN 환경 변수가 설정되지 않았습니다');
@@ -219,15 +228,29 @@ function normalizeProjectForFrontend(project) {
   const number = project.Number || project.number || '';
   const folderName = PROJECT_FOLDER_MAP[number];
   
-  // Notion에 images가 비어있으면 로컬 경로로 자동 생성
+  // Notion에 images가  비어있으면 로컬 파일 시스템에서 읽기
   let images = project.images || [];
   if (images.length === 0 && folderName) {
-    // 이미지 최대 개수 설정 (실제 파일 존재 여부는 로드 시 확인)
-    images = Array.from({length: 30}, (_, i) => {
-      // gif, jpg 확장자 혼용 가능하도록
-      return `img/projects/${folderName}/img${i + 1}.jpg`;
-    });
-  } else {
+    const projectImagesPath = path.join(__dirname, '..', 'img', 'projects', folderName);
+    
+    try {
+      if (fs.existsSync(projectImagesPath)) {
+        // 실제 파일 목록을 읽어서 정렬
+        const files = fs.readdirSync(projectImagesPath)
+          .filter(file => /^img\d+\.(jpg|gif|png)$/i.test(file))
+          .sort((a, b) => {
+            const numA = parseInt(a.match(/\d+/)[0]);
+            const numB = parseInt(b.match(/\d+/)[0]);
+            return numA - numB;
+          });
+        
+        images = files.map(file => `img/projects/${folderName}/${file}`);
+        console.log(`  📁 ${folderName}: ${images.length}개 이미지 파일 발견`);
+      }
+    } catch (error) {
+      console.warn(`  ⚠️ ${folderName} 이미지 폴더 읽기 실패:`, error.message);
+    }
+  } else if (images.length > 0) {
     // S3 URL이 있으면 로컬 경로로 변환
     images = convertImagesToLocalPaths(images, number);
   }
@@ -355,9 +378,6 @@ async function getSettings() {
         }
       });
     }
-    
-    // ⚠️ 보안: PASSWORD는 절대 JSON에 저장하지 않음 (로컬 파일에서만 로드)
-    delete settingsObj.PASSWORD;
     
     console.log(`  ✅ Settings 로드됨 (${Object.keys(settingsObj).length}개 속성)`);
     return settingsObj;
