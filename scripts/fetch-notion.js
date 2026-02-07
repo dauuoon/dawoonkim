@@ -180,15 +180,20 @@ function convertImagesToLocalPaths(images, projectNumber) {
 function convertVaultImagesToLocalPaths(vaultItems) {
   if (!vaultItems || vaultItems.length === 0) return [];
   
-  return vaultItems.map((item, index) => ({
-    ...item,
-    thumbnailImage: item.thumbnailImage && item.thumbnailImage.includes('amazonaws') 
-      ? `img/vault/vault${index + 1}_thumb.png` 
-      : item.thumbnailImage,
-    fullImage: item.fullImage && item.fullImage.includes('amazonaws') 
-      ? `img/vault/vault${index + 1}.png` 
-      : item.fullImage
-  }));
+  return vaultItems.map((item, index) => {
+    // order 필드가 있으면 사용, 없으면 index + 1
+    const vaultNumber = item.order !== undefined && item.order > 0 ? item.order : index + 1;
+    
+    return {
+      ...item,
+      thumbnailImage: item.thumbnailImage && item.thumbnailImage.includes('amazonaws') 
+        ? `path/thumbnail/vault/vault${vaultNumber}.png` 
+        : item.thumbnailImage,
+      fullImage: item.fullImage && item.fullImage.includes('amazonaws') 
+        ? `path/full/vault/vault${vaultNumber}.png` 
+        : item.fullImage
+    };
+  });
 }
 
 // 프로젝트 데이터 가져오기
@@ -258,9 +263,16 @@ async function getSettings() {
       settings.forEach(item => {
         Object.assign(merged, item);
       });
+      
+      // ⚠️ 보안: PASSWORD는 절대 JSON에 저장하지 않음 (로컬 파일에서만 로드)
+      delete merged.PASSWORD;
+      
       console.log(`  ✅ Settings 로드됨 (${Object.keys(merged).length}개 속성)`);
       return merged;
     }
+    
+    // ⚠️ 보안: PASSWORD 제외
+    delete settings.PASSWORD;
     
     console.log(`  ✅ Settings 로드됨`);
     return settings;

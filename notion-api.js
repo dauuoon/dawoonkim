@@ -50,12 +50,17 @@ async function loadAllData() {
   try {
     const data = await loadNotionData();
     
-    // 패스워드 설정 (SETTINGS에서 가져온 평문을 MD5 해싱)
-    if (data.settings && data.settings.PASSWORD) {
-      window.NOTION_PASSWORD_HASH = CryptoJS.MD5(data.settings.PASSWORD).toString();
-      console.log('✅ 패스워드 설정 완료');
+    // 패스워드 설정 (로컬 passwords.js에서 가져옴)
+    if (typeof getPasswordHash === 'function') {
+      const hash = getPasswordHash();
+      if (hash) {
+        window.NOTION_PASSWORD_HASH = hash;
+        console.log('✅ 패스워드 설정 완료');
+      } else {
+        console.warn('⚠️ CryptoJS가 로드되지 않았습니다. 비밀번호 해싱 불가');
+      }
     } else {
-      console.warn('⚠️ SETTINGS에서 패스워드를 찾을 수 없습니다');
+      console.warn('⚠️ passwords.js 파일을 찾을 수 없습니다');
     }
     
     return {
