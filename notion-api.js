@@ -24,7 +24,7 @@ async function loadNotionData() {
 // 프로젝트 데이터 가져오기
 async function getProjects() {
   const data = await loadNotionData();
-  return data.projects || [];
+  return (data.projects || []).map(normalizeProject);
 }
 
 // ABOUT 데이터 가져오기
@@ -39,6 +39,34 @@ async function getVaultData() {
   return data.vault || [];
 }
 
+// 프로젝트 데이터 형식 변환 (Notion API 필드명 → 기존 필드명)
+function normalizeProject(project) {
+  return {
+    id: project['Project ID'] || `proj_${project.Number}`,
+    title: project.Title || '',
+    subtitle: project.Subtitle || '',
+    description: project.Description || '',
+    date: project.Date || '',
+    projectType: project.ProjectType || '',
+    part: project.Part || '',
+    client: project.Client || '',
+    tags: project.tags || [],
+    status: project.Status || 'UNLOCKED',
+    thumbColor: project.ThumbColor || '#000000',
+    mainColor: project.MainColor || '#000000',
+    modalTextColor: project.ModalTextColor || '#000000',
+    modalBgColor: project.ModalBgColor || '#FFFFFF',
+    thumbnailImage: project.thumbnailImage || null,
+    coverImage: project.coverImage || null,
+    images: project.images || [],
+    order: project.Order || 0,
+    number: project.Number || '',
+    year: project.Year || new Date().getFullYear(),
+    category: Array.isArray(project.Category) ? project.Category[0] : (project.Category || ''),
+    techType: Array.isArray(project.TechType) ? project.TechType[0] : (project.TechType || '')
+  };
+}
+
 // SETTINGS 데이터 가져오기
 async function getSettings() {
   const data = await loadNotionData();
@@ -51,21 +79,27 @@ async function loadAllData() {
     const data = await loadNotionData();
     
     // 패스워드 설정 (Notion settings에서 가져옴)
-    if (data.settings && data.settings.VAULT_PASSWORD) {
-      const password = data.settings.VAULT_PASSWORD;
-      if (typeof CryptoJS !== 'undefined') {
+    if (data.settings) {
+      // settings.Key === "PASSWORD" && settings.Value = "26d01" 형식 처리
+      let password = null;
+      if (data.settings.Key === 'PASSWORD' && data.settings.Value) {
+        password = data.settings.Value;
+      } else if (data.settings.VAULT_PASSWORD) {
+        // 기존 형식 호환성
+        password = data.settings.VAULT_PASSWORD;
+      }
+      
+      if (password && typeof CryptoJS !== 'undefined') {
         const hash = CryptoJS.MD5(password).toString();
         window.NOTION_PASSWORD_HASH = hash;
         console.log('✅ 패스워드 설정 완료 (Notion 데이터에서)');
-      } else {
+      } else if (password) {
         console.warn('⚠️ CryptoJS가 로드되지 않았습니다. 비밀번호 해싱 불가');
       }
-    } else {
-      console.warn('⚠️ Notion 설정에서 VAULT_PASSWORD를 찾을 수 없습니다');
     }
     
     return {
-      projects: data.projects || [],
+      projects: (data.projects || []).map(normalizeProject),
       about: data.about || [],
       vault: data.vault || [],
       settings: data.settings || {}
