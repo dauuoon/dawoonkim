@@ -176,6 +176,21 @@ function convertImagesToLocalPaths(images, projectNumber) {
   });
 }
 
+// Vault 이미지 URL을 로컬 경로로 변환
+function convertVaultImagesToLocalPaths(vaultItems) {
+  if (!vaultItems || vaultItems.length === 0) return [];
+  
+  return vaultItems.map((item, index) => ({
+    ...item,
+    thumbnailImage: item.thumbnailImage && item.thumbnailImage.includes('amazonaws') 
+      ? `img/vault/vault${index + 1}_thumb.png` 
+      : item.thumbnailImage,
+    fullImage: item.fullImage && item.fullImage.includes('amazonaws') 
+      ? `img/vault/vault${index + 1}.png` 
+      : item.fullImage
+  }));
+}
+
 // 프로젝트 데이터 가져오기
 async function getProjects() {
   try {
@@ -214,8 +229,12 @@ async function getVaultData() {
   try {
     console.log('  📥 Vault 데이터베이스 쿼리 중...');
     const vault = await queryDatabase(DATABASE_IDS.VAULT);
-    console.log(`  ✅ ${vault.length}개 항목 로드됨`);
-    return vault;
+    
+    // Vault 이미지 경로 변환
+    const processedVault = convertVaultImagesToLocalPaths(vault);
+    
+    console.log(`  ✅ ${processedVault.length}개 항목 로드됨`);
+    return processedVault;
   } catch (error) {
     console.error('  ❌ Vault 로드 실패:', error.message);
     return [];
@@ -227,8 +246,24 @@ async function getSettings() {
   try {
     console.log('  📥 Settings 데이터베이스 쿼리 중...');
     const settings = await queryDatabase(DATABASE_IDS.SETTINGS);
+    
+    if (!settings || settings.length === 0) {
+      console.warn('  ⚠️ Settings 데이터가 없습니다');
+      return {};
+    }
+    
+    // 여러 항목이 있으면 합쳐서 하나의 객체로 반환
+    if (Array.isArray(settings)) {
+      const merged = {};
+      settings.forEach(item => {
+        Object.assign(merged, item);
+      });
+      console.log(`  ✅ Settings 로드됨 (${Object.keys(merged).length}개 속성)`);
+      return merged;
+    }
+    
     console.log(`  ✅ Settings 로드됨`);
-    return settings.length > 0 ? settings[0] : {};
+    return settings;
   } catch (error) {
     console.error('  ❌ Settings 로드 실패:', error.message);
     return {};
