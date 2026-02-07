@@ -81,33 +81,22 @@ async function getDatabaseSchema(databaseId) {
 }
 
 // 데이터베이스 쿼리
-async function queryDatabase(databaseId) {
+async function queryDatabase(databaseId, options = {}) {
   try {
     const schema = await getDatabaseSchema(databaseId);
     const properties = schema.properties || {};
     const propertyEntries = Object.entries(properties);
 
-    const statusProp = propertyEntries.find(([name]) => name.toLowerCase() === 'status');
     const orderProp = propertyEntries.find(([name]) => name.toLowerCase() === 'order');
 
-    let filter = null;
-    if (statusProp) {
-      const [statusName, statusDef] = statusProp;
-      if (statusDef.type === 'status') {
-        filter = { property: statusName, status: { equals: 'UNLOCKED' } };
-      } else if (statusDef.type === 'select') {
-        filter = { property: statusName, select: { equals: 'UNLOCKED' } };
-      } else {
-        console.warn(`⚠️ status 속성 타입이 status/select가 아닙니다: ${statusDef.type}`);
-      }
-    }
-
+    // options.sortDirection으로 정렬 방향 지정 가능 (기본값: descending)
+    const sortDirection = options.sortDirection || 'descending';
+    
     const sorts = orderProp
-      ? [{ property: orderProp[0], direction: 'ascending' }]
+      ? [{ property: orderProp[0], direction: sortDirection }]
       : undefined;
 
     const body = {};
-    if (filter) body.filter = filter;
     if (sorts) body.sorts = sorts;
 
     const response = await notionFetch(`/databases/${databaseId}/query`, {
@@ -299,10 +288,8 @@ async function getProjects() {
     console.log('  📥 Projects 데이터베이스 쿼리 중...');
     const projects = await queryDatabase(DATABASE_IDS.PROJECTS);
     
-    // 프론트엔드 형식으로 변환 및 정렬
-    const processedProjects = projects
-      .map(normalizeProjectForFrontend)
-      .sort((a, b) => a.order - b.order);
+    // 프론트엔드 형식으로 변환 (정렬은 queryDatabase에서 이미 함)
+    const processedProjects = projects.map(normalizeProjectForFrontend);
     
     console.log(`  ✅ ${processedProjects.length}개 프로젝트 로드됨`);
     return processedProjects;
@@ -335,10 +322,8 @@ async function getVaultData() {
     console.log('  📥 Vault 데이터베이스 쿼리 중...');
     const vault = await queryDatabase(DATABASE_IDS.VAULT);
     
-    // 프론트엔드 형식으로 변환 및 정렬
-    const processedVault = vault
-      .map(normalizeVaultForFrontend)
-      .sort((a, b) => a.order - b.order);
+    // 프론트엔드 형식으로 변환 (정렬은 queryDatabase에서 이미 함)
+    const processedVault = vault.map(normalizeVaultForFrontend);
     
     console.log(`  ✅ ${processedVault.length}개 항목 로드됨`);
     return processedVault;

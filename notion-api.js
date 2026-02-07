@@ -24,23 +24,22 @@ async function loadNotionData() {
 // 프로젝트 데이터 가져오기
 async function getProjects() {
   const data = await loadNotionData();
-  const projects = (data.projects || []).map(normalizeProject);
-  // Order 기준으로 정렬
-  return projects.sort((a, b) => a.order - b.order);
+  // fetch-notion.js에서 이미 변환 및 정렬됨
+  return data.projects || [];
 }
 
 // ABOUT 데이터 가져오기
 async function getAboutData() {
   const data = await loadNotionData();
-  return (data.about || []).map(normalizeAbout);
+  // fetch-notion.js에서 이미 변환됨
+  return data.about || [];
 }
 
 // VAULT 데이터 가져오기
 async function getVaultData() {
   const data = await loadNotionData();
-  const vault = (data.vault || []).map(normalizeVault);
-  // Order 기준으로 정렬
-  return vault.sort((a, b) => a.order - b.order);
+  // fetch-notion.js에서 이미 변환 및 정렬됨
+  return data.vault || [];
 }
 
 // 프로젝트 번호 → 폴더명 매핑
@@ -141,14 +140,11 @@ async function loadAllData() {
       console.warn('⚠️ passwords.js 파일을 찾을 수 없습니다 (필수 아님)');
     }
     
-    const projects = (data.projects || []).map(normalizeProject).sort((a, b) => a.order - b.order);
-    const about = (data.about || []).map(normalizeAbout);
-    const vault = (data.vault || []).map(normalizeVault).sort((a, b) => a.order - b.order);
-    
+    // fetch-notion.js에서 이미 변환 및 정렬된 데이터를 그대로 반환
     return {
-      projects: projects,
-      about: about,
-      vault: vault,
+      projects: data.projects || [],
+      about: data.about || [],
+      vault: data.vault || [],
       settings: data.settings || {}
     };
   } catch (error) {
