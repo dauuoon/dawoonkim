@@ -59,30 +59,59 @@ async function notionFetch(endpoint, options = {}) {
   });
 
   if (!response.ok) {
-    throw new Error(`Notion API Error [${response.status}]: ${response.statusText}`);
+    const errorText = await response.text();
+    const detail = errorText ? ` - ${errorText}` : '';
+    throw new Error(`Notion API Error [${response.status}]: ${response.statusText}${detail}`);
   }
 
   return response.json();
 }
 
+const databaseSchemaCache = new Map();
+
+// 데이터베이스 스키마 가져오기
+async function getDatabaseSchema(databaseId) {
+  if (databaseSchemaCache.has(databaseId)) {
+    return databaseSchemaCache.get(databaseId);
+  }
+
+  const schema = await notionFetch(`/databases/${databaseId}`, { method: 'GET' });
+  databaseSchemaCache.set(databaseId, schema);
+  return schema;
+}
+
 // 데이터베이스 쿼리
 async function queryDatabase(databaseId) {
   try {
-    const response = await notionFetch(`/databases/${databaseId}/query`, {
-      body: {
-        filter: {
-          property: 'status',
-          select: {
-            equals: 'UNLOCKED'
-          }
-        },
-        sorts: [
-          {
-            property: 'order',
-            direction: 'ascending'
-          }
-        ]
+    const schema = await getDatabaseSchema(databaseId);
+    const properties = schema.properties || {};
+    const propertyEntries = Object.entries(properties);
+
+    const statusProp = propertyEntries.find(([name]) => name.toLowerCase() === 'status');
+    const orderProp = propertyEntries.find(([name]) => name.toLowerCase() === 'order');
+
+    let filter = null;
+    if (statusProp) {
+      const [statusName, statusDef] = statusProp;
+      if (statusDef.type === 'status') {
+        filter = { property: statusName, status: { equals: 'UNLOCKED' } };
+      } else if (statusDef.type === 'select') {
+        filter = { property: statusName, select: { equals: 'UNLOCKED' } };
+      } else {
+        console.warn(`⚠️ status 속성 타입이 status/select가 아닙니다: ${statusDef.type}`);
       }
+    }
+
+    const sorts = orderProp
+      ? [{ property: orderProp[0], direction: 'ascending' }]
+      : undefined;
+
+    const body = {};
+    if (filter) body.filter = filter;
+    if (sorts) body.sorts = sorts;
+
+    const response = await notionFetch(`/databases/${databaseId}/query`, {
+      body
     });
 
     return response.results.map(page => formatPageData(page));
