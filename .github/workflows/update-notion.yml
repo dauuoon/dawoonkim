@@ -7,11 +7,6 @@ on:
   
   # 수동 실행 가능
   workflow_dispatch:
-  
-  # main 브랜치에 push될 때도 실행
-  push:
-    branches:
-      - main
 
 jobs:
   update-data:
