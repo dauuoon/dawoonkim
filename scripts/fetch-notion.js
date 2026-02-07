@@ -225,17 +225,84 @@ function convertVaultImagesToLocalPaths(vaultItems) {
   });
 }
 
+// 프로젝트 데이터를 프론트엔드 형식으로 변환
+function normalizeProjectForFrontend(project) {
+  const number = project.Number || project.number || '';
+  const folderName = PROJECT_FOLDER_MAP[number];
+  
+  // Notion에 images가 비어있으면 로컬 경로로 자동 생성
+  let images = project.images || [];
+  if (images.length === 0 && folderName) {
+    // 이미지 최대 개수 설정 (실제 파일 존재 여부는 로드 시 확인)
+    images = Array.from({length: 30}, (_, i) => {
+      // gif, jpg 확장자 혼용 가능하도록
+      return `img/projects/${folderName}/img${i + 1}.jpg`;
+    });
+  } else {
+    // S3 URL이 있으면 로컬 경로로 변환
+    images = convertImagesToLocalPaths(images, number);
+  }
+  
+  return {
+    id: project['Project ID'] || `proj_${number}`,
+    title: project.Title || '',
+    subtitle: project.Subtitle || '',
+    description: project.Description || '',
+    date: project.Date || '',
+    projectType: project.ProjectType || '',
+    part: project.Part || '',
+    client: project.Client || '',
+    tags: project.tags || [],
+    status: project.Status || 'UNLOCKED',
+    thumbColor: project.ThumbColor || '#000000',
+    mainColor: project.MainColor || '#000000',
+    modalTextColor: project.ModalTextColor || '#000000',
+    modalBgColor: project.ModalBgColor || '#FFFFFF',
+    thumbnailImage: project.thumbnailImage || null,
+    coverImage: project.coverImage || null,
+    images: images,
+    order: project.Order || 0,
+    number: number,
+    year: project.Year || new Date().getFullYear(),
+    category: Array.isArray(project.Category) ? project.Category[0] : (project.Category || ''),
+    techType: Array.isArray(project.TechType) ? project.TechType[0] : (project.TechType || '')
+  };
+}
+
+// About 데이터를 프론트엔드 형식으로 변환
+function normalizeAboutForFrontend(about) {
+  return {
+    id: about.ID || '',
+    section: about.Section || '',
+    title: about.Title || '',
+    detail: about.Detail || '',
+    startDate: about.StartDate || '',
+    endDate: about.EndDate || '',
+    link: about.Link || null
+  };
+}
+
+// Vault 데이터를 프론트엔드 형식으로 변환
+function normalizeVaultForFrontend(vault) {
+  const order = vault.Order || 1;
+  return {
+    id: vault.ID || `va_${order}`,
+    order: order,
+    thumbnailImage: vault.thumbnailImage || `path/thumbnail/vault/vault${order}.png`,
+    fullImage: vault.fullImage || `path/full/vault/vault${order}.png`
+  };
+}
+
 // 프로젝트 데이터 가져오기
 async function getProjects() {
   try {
     console.log('  📥 Projects 데이터베이스 쿼리 중...');
     const projects = await queryDatabase(DATABASE_IDS.PROJECTS);
     
-    // 이미지 경로 변환
-    const processedProjects = projects.map(project => ({
-      ...project,
-      images: convertImagesToLocalPaths(project.images, project.number)
-    }));
+    // 프론트엔드 형식으로 변환 및 정렬
+    const processedProjects = projects
+      .map(normalizeProjectForFrontend)
+      .sort((a, b) => a.order - b.order);
     
     console.log(`  ✅ ${processedProjects.length}개 프로젝트 로드됨`);
     return processedProjects;
@@ -250,8 +317,12 @@ async function getAboutData() {
   try {
     console.log('  📥 About 데이터베이스 쿼리 중...');
     const about = await queryDatabase(DATABASE_IDS.ABOUT);
-    console.log(`  ✅ ${about.length}개 항목 로드됨`);
-    return about;
+    
+    // 프론트엔드 형식으로 변환
+    const processedAbout = about.map(normalizeAboutForFrontend);
+    
+    console.log(`  ✅ ${processedAbout.length}개 항목 로드됨`);
+    return processedAbout;
   } catch (error) {
     console.error('  ❌ About 로드 실패:', error.message);
     return [];
@@ -264,8 +335,10 @@ async function getVaultData() {
     console.log('  📥 Vault 데이터베이스 쿼리 중...');
     const vault = await queryDatabase(DATABASE_IDS.VAULT);
     
-    // Vault 이미지 경로 변환
-    const processedVault = convertVaultImagesToLocalPaths(vault);
+    // 프론트엔드 형식으로 변환 및 정렬
+    const processedVault = vault
+      .map(normalizeVaultForFrontend)
+      .sort((a, b) => a.order - b.order);
     
     console.log(`  ✅ ${processedVault.length}개 항목 로드됨`);
     return processedVault;
@@ -286,25 +359,23 @@ async function getSettings() {
       return {};
     }
     
-    // 여러 항목이 있으면 합쳐서 하나의 객체로 반환
+    // Key-Value 쌍으로 변환
+    const settingsObj = {};
     if (Array.isArray(settings)) {
-      const merged = {};
       settings.forEach(item => {
-        Object.assign(merged, item);
+        const key = item.Key;
+        const value = item.Value;
+        if (key && value !== undefined) {
+          settingsObj[key] = value;
+        }
       });
-      
-      // ⚠️ 보안: PASSWORD는 절대 JSON에 저장하지 않음 (로컬 파일에서만 로드)
-      delete merged.PASSWORD;
-      
-      console.log(`  ✅ Settings 로드됨 (${Object.keys(merged).length}개 속성)`);
-      return merged;
     }
     
-    // ⚠️ 보안: PASSWORD 제외
-    delete settings.PASSWORD;
+    // ⚠️ 보안: PASSWORD는 절대 JSON에 저장하지 않음 (로컬 파일에서만 로드)
+    delete settingsObj.PASSWORD;
     
-    console.log(`  ✅ Settings 로드됨`);
-    return settings;
+    console.log(`  ✅ Settings 로드됨 (${Object.keys(settingsObj).length}개 속성)`);
+    return settingsObj;
   } catch (error) {
     console.error('  ❌ Settings 로드 실패:', error.message);
     return {};

@@ -24,25 +24,51 @@ async function loadNotionData() {
 // 프로젝트 데이터 가져오기
 async function getProjects() {
   const data = await loadNotionData();
-  return (data.projects || []).map(normalizeProject);
+  const projects = (data.projects || []).map(normalizeProject);
+  // Order 기준으로 정렬
+  return projects.sort((a, b) => a.order - b.order);
 }
 
 // ABOUT 데이터 가져오기
 async function getAboutData() {
   const data = await loadNotionData();
-  return data.about || [];
+  return (data.about || []).map(normalizeAbout);
 }
 
 // VAULT 데이터 가져오기
 async function getVaultData() {
   const data = await loadNotionData();
-  return data.vault || [];
+  const vault = (data.vault || []).map(normalizeVault);
+  // Order 기준으로 정렬
+  return vault.sort((a, b) => a.order - b.order);
 }
+
+// 프로젝트 번호 → 폴더명 매핑
+const PROJECT_FOLDER_MAP = {
+  '01': '99das',
+  '02': 'ridp',
+  '03': 'iplex',
+  '04': 'valoo',
+  '05': 'whybox'
+};
 
 // 프로젝트 데이터 형식 변환 (Notion API 필드명 → 기존 필드명)
 function normalizeProject(project) {
+  const number = project.Number || '';
+  const folderName = PROJECT_FOLDER_MAP[number];
+  
+  // Notion에 images가 없으면 로컬 경로 자동 생성
+  let images = project.images || [];
+  if (images.length === 0 && folderName) {
+    // 프로젝트별 이미지 개수 추정 (실제 파일 존재 여부는 로드 시 확인)
+    const imageCount = 30; // 최대 30개까지 시도
+    images = Array.from({length: imageCount}, (_, i) => 
+      `img/projects/${folderName}/img${i + 1}.jpg`
+    );
+  }
+  
   return {
-    id: project['Project ID'] || `proj_${project.Number}`,
+    id: project['Project ID'] || `proj_${number}`,
     title: project.Title || '',
     subtitle: project.Subtitle || '',
     description: project.Description || '',
@@ -58,12 +84,36 @@ function normalizeProject(project) {
     modalBgColor: project.ModalBgColor || '#FFFFFF',
     thumbnailImage: project.thumbnailImage || null,
     coverImage: project.coverImage || null,
-    images: project.images || [],
+    images: images,
     order: project.Order || 0,
-    number: project.Number || '',
+    number: number,
     year: project.Year || new Date().getFullYear(),
     category: Array.isArray(project.Category) ? project.Category[0] : (project.Category || ''),
     techType: Array.isArray(project.TechType) ? project.TechType[0] : (project.TechType || '')
+  };
+}
+
+// Vault 데이터 형식 변환
+function normalizeVault(vaultItem) {
+  const order = vaultItem.Order || 1;
+  return {
+    id: vaultItem.ID || `va_${order}`,
+    order: order,
+    thumbnailImage: vaultItem.thumbnailImage || `path/thumbnail/vault/vault${order}.png`,
+    fullImage: vaultItem.fullImage || `path/full/vault/vault${order}.png`
+  };
+}
+
+// About 데이터 형식 변환
+function normalizeAbout(aboutItem) {
+  return {
+    id: aboutItem.ID || '',
+    section: aboutItem.Section || '',
+    title: aboutItem.Title || '',
+    detail: aboutItem.Detail || '',
+    startDate: aboutItem.StartDate || '',
+    endDate: aboutItem.EndDate || '',
+    link: aboutItem.Link || null
   };
 }
 
@@ -78,30 +128,27 @@ async function loadAllData() {
   try {
     const data = await loadNotionData();
     
-    // 패스워드 설정 (Notion settings에서 가져옴)
-    if (data.settings) {
-      // settings.Key === "PASSWORD" && settings.Value = "26d01" 형식 처리
-      let password = null;
-      if (data.settings.Key === 'PASSWORD' && data.settings.Value) {
-        password = data.settings.Value;
-      } else if (data.settings.VAULT_PASSWORD) {
-        // 기존 형식 호환성
-        password = data.settings.VAULT_PASSWORD;
-      }
-      
-      if (password && typeof CryptoJS !== 'undefined') {
-        const hash = CryptoJS.MD5(password).toString();
+    // 패스워드 설정 (로컬 passwords.js에서 가져옴 - 보안상 Notion에서 가져오지 않음)
+    if (typeof getPasswordHash === 'function') {
+      const hash = getPasswordHash();
+      if (hash) {
         window.NOTION_PASSWORD_HASH = hash;
-        console.log('✅ 패스워드 설정 완료 (Notion 데이터에서)');
-      } else if (password) {
+        console.log('✅ 패스워드 설정 완료 (로컬 passwords.js에서)');
+      } else {
         console.warn('⚠️ CryptoJS가 로드되지 않았습니다. 비밀번호 해싱 불가');
       }
+    } else {
+      console.warn('⚠️ passwords.js 파일을 찾을 수 없습니다 (필수 아님)');
     }
     
+    const projects = (data.projects || []).map(normalizeProject).sort((a, b) => a.order - b.order);
+    const about = (data.about || []).map(normalizeAbout);
+    const vault = (data.vault || []).map(normalizeVault).sort((a, b) => a.order - b.order);
+    
     return {
-      projects: (data.projects || []).map(normalizeProject),
-      about: data.about || [],
-      vault: data.vault || [],
+      projects: projects,
+      about: about,
+      vault: vault,
       settings: data.settings || {}
     };
   } catch (error) {
