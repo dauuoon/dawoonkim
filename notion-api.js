@@ -50,17 +50,18 @@ async function loadAllData() {
   try {
     const data = await loadNotionData();
     
-    // 패스워드 설정 (로컬 passwords.js에서 가져옴)
-    if (typeof getPasswordHash === 'function') {
-      const hash = getPasswordHash();
-      if (hash) {
+    // 패스워드 설정 (Notion settings에서 가져옴)
+    if (data.settings && data.settings.VAULT_PASSWORD) {
+      const password = data.settings.VAULT_PASSWORD;
+      if (typeof CryptoJS !== 'undefined') {
+        const hash = CryptoJS.MD5(password).toString();
         window.NOTION_PASSWORD_HASH = hash;
-        console.log('✅ 패스워드 설정 완료');
+        console.log('✅ 패스워드 설정 완료 (Notion 데이터에서)');
       } else {
         console.warn('⚠️ CryptoJS가 로드되지 않았습니다. 비밀번호 해싱 불가');
       }
     } else {
-      console.warn('⚠️ passwords.js 파일을 찾을 수 없습니다');
+      console.warn('⚠️ Notion 설정에서 VAULT_PASSWORD를 찾을 수 없습니다');
     }
     
     return {
