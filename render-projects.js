@@ -260,49 +260,59 @@ function showProjectContent(projectTitle) {
 
   const currentToken = ++modalLoadToken;
 
-  const imagePromises = project.images.map((src, index) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.loading = "eager";
-      img.decoding = "async";
-      img.setAttribute("importance", "high");
+  // 순차 로딩으로 변경 (동시 요청 최소화)
+  async function loadImagesSequentially() {
+    const loadedImages = [];
+    for (let index = 0; index < project.images.length; index++) {
+      const src = project.images[index];
+      
+      try {
+        if (currentToken !== modalLoadToken) return;
 
-      img.onload = () => {
+        const img = await new Promise((resolve, reject) => {
+          const image = new Image();
+          image.onload = () => resolve(image);
+          image.onerror = () => reject(new Error(`Failed to load: ${src}`));
+          image.src = src;
+          image.alt = `${project.title} - image ${index + 1}`;
+        });
+
+        loadedImages.push(img);
+
         const progress = Math.round(((index + 1) / project.images.length) * 100);
         const progressEl = modal.querySelector(".loading-progress");
         if (progressEl) progressEl.textContent = `${progress}%`;
-        resolve(img);
-      };
 
-      img.onerror = reject;
-      img.src = src;
-      img.alt = `${project.title} - image ${index + 1}`;
+      } catch (error) {
+        console.warn(`⚠️ 이미지 로드 실패 (${index + 1}/${project.images.length}):`, error);
+        continue;
+      }
+    }
+
+    if (currentToken !== modalLoadToken) return;
+
+    if (loadedImages.length === 0) {
+      modalBody.innerHTML = '<div class="error-message">이미지를 불러올 수 없습니다.</div>';
+      return;
+    }
+
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "project-images";
+
+    loadedImages.forEach((img) => {
+      const imgClone = img.cloneNode(true);
+      imgClone.style.display = "block";
+      imgClone.style.width = "100%";
+      imageContainer.appendChild(imgClone);
     });
-  });
 
-  Promise.all(imagePromises)
-    .then((loadedImages) => {
-      if (currentToken !== modalLoadToken) return;
-      const imageContainer = document.createElement("div");
-      imageContainer.className = "project-images";
+    modalBody.style.opacity = "0";
+    setTimeout(() => {
+      modalBody.innerHTML = "";
+      modalBody.appendChild(imageContainer);
+      modalBody.style.opacity = "1";
+    }, 300);
+  }
 
-      loadedImages.forEach((img) => {
-        const imgClone = img.cloneNode(true);
-        imgClone.style.display = "block";
-        imgClone.style.width = "100%";
-        imageContainer.appendChild(imgClone);
-      });
-
-      modalBody.style.opacity = "0";
-      setTimeout(() => {
-        modalBody.innerHTML = "";
-        modalBody.appendChild(imageContainer);
-        modalBody.style.opacity = "1";
-      }, 300);
-    })
-    .catch((error) => {
-      if (currentToken !== modalLoadToken) return;
-      console.error("이미지 로딩 실패:", error);
-      modalBody.innerHTML = '<div class="error-message">이미지를 불러오는데 실패했습니다.</div>';
-    });
+  loadImagesSequentially();
 }
