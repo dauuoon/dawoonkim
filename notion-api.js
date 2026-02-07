@@ -1,5 +1,5 @@
-// Notion 데이터 로드 (빌드된 JSON 파일에서)
-// GitHub Actions가 매일 오후 2시에 자동으로 데이터를 업데이트합니다
+// Notion 데이터 로드 (GitHub Actions가 매일 갱신한 JSON 파일에서)
+// scripts/fetch-notion.js가 매일 오후 2시에 Notion에서 데이터를 fetch해서 JSON으로 저장합니다
 
 let cachedData = null;
 
@@ -7,12 +7,13 @@ async function loadNotionData() {
   if (cachedData) return cachedData;
   
   try {
+    console.log('🔄 로컬 데이터 로드 중...');
     const response = await fetch('data/notion-data.json');
     if (!response.ok) {
       throw new Error(`Failed to load data: ${response.status}`);
     }
     cachedData = await response.json();
-    console.log('✅ Notion 데이터 로드 완료 (마지막 업데이트:', cachedData.lastUpdated, ')');
+    console.log('✅ 데이터 로드 완료 (마지막 업데이트:', cachedData.lastUpdated, ')');
     return cachedData;
   } catch (error) {
     console.error('❌ 데이터 로드 실패:', error);
@@ -49,11 +50,10 @@ async function loadAllData() {
   try {
     const data = await loadNotionData();
     
-    // 패스워드 설정 (SETTINGS DB에 평문 저장, 여기서 MD5 해싱)
+    // 패스워드 설정 (SETTINGS에서 가져온 평문을 MD5 해싱)
     if (data.settings && data.settings.PASSWORD) {
       window.NOTION_PASSWORD_HASH = CryptoJS.MD5(data.settings.PASSWORD).toString();
       console.log('✅ 패스워드 설정 완료');
-      console.log('NOTION_PASSWORD_HASH:', window.NOTION_PASSWORD_HASH);
     } else {
       console.warn('⚠️ SETTINGS에서 패스워드를 찾을 수 없습니다');
     }
