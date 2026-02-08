@@ -64,8 +64,8 @@
       "tags": [],
       "status": "UNLOCKED",
       "thumbColor": "#00A2F3",
-      "mainColor": "#00A2F3",
-      "modalTextColor": "#00A2F3",
+      "mainColor": "#0E3147",
+      "modalTextColor": "#0E3147",
       "modalBgColor": "#DFEFF6",
       "thumbnailImage": null,
       "coverImage": null,
@@ -373,5 +373,5 @@
     "TOTAL_PROJECTS_COUNT": "119",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-02-07T16:33:19.941Z"
+  "lastUpdated": "2026-02-08T05:30:11.195Z"
 }
