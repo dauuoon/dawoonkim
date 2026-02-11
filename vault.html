@@ -45,22 +45,15 @@
     gtag('config', 'G-9DHEJ5QTGJ');
     </script>    
     <!-- 즉시 실행되는 인라인 스크립트를 head에 배치 -->
-    <script>
-        // 페이지 파싱 전에 즉시 실행
-        (function () {
-            if (!sessionStorage.getItem('vaultAuthorized')) {
-                document.documentElement.style.display = 'none';
-            }
-        })();
-    </script>
+    <!-- Vault 비밀번호 제거 완료 (2026-02-11) -->
     <style>
-        /* 이 <style> 블록 전체를 제거하거나 주석 처리합니다. */
+        /* Vault 비밀번호 제거 완료 (2026-02-11) */
         .vault-content {
-            display: none;
+            display: block;
         }
 
         #vault-popup-container {
-            display: none;
+            display: none !important;
         }
 
         /* .study-grid-container { */
@@ -188,14 +181,7 @@
             </div>
         </div>
 
-        <!-- 비밀번호 팝업 -->
-        <div id="vault-popup-container" class="active">
-            <div class="vault-password-popup">
-                <h3>This page is protected.</h3>
-                <input type="password" id="vault-password-input" placeholder="Enter password">
-                <button id="vault-submit-password">OK</button>
-            </div>
-        </div>
+        <!-- 비밀번호 팝업 - 제거됨 (2026-02-11) -->
 
         <!-- 컨텐츠를 vault-content 클래스로 감싸기 -->
         <div class="vault-content">

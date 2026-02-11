@@ -639,65 +639,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Vault 페이지 비밀번호 체크 (DOM 요소 접근)
-    if (currentPage === "vault.html") {
-      const vaultContent = document.getElementById("vault-content");
-      const popup = document.getElementById("vault-popup-container");
-      const passwordInput = document.getElementById("vault-password-input");
-      const submitButton = document.getElementById("vault-submit-password"); // 제출 버튼도 필요할 수 있습니다.
-
-      // 팝업 관련 요소들이 모두 존재하는지 확인하는 조건문 추가
-      if (vaultContent && popup && passwordInput && submitButton) {
-        // 페이지 로드 시 팝업 표시
-        popup.classList.remove("hidden"); // hidden 클래스가 있다면 제거
-        popup.classList.add("active"); // active 클래스 추가
-        passwordInput.focus(); // 입력 필드에 포커스
-
-        // ESC 키로 팝업 닫기 (페이지 이동)
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") {
-            // window.location.href = 'index.html'; // 이 두 줄은 vault.html에서 다른 페이지로 이동하는 것인지 확인 필요
-            // window.location.href = 'vault.html'; // 같은 페이지로 다시 이동하면 무한 루프나 오류 발생 가능성
-            // 보통은 팝업만 닫거나 (display: none), 이전 페이지로 이동합니다.
-            // 예: window.history.back(); 또는 window.location.href = 'index.html';
-            console.log(
-              "ESC 키 눌림 - 팝업 닫기 또는 페이지 이동 로직 실행 필요"
-            ); // 로그 추가
-            // 팝업만 닫으려면:
-            popup.classList.remove("active");
-            popup.classList.add("hidden"); // hidden 클래스가 있다면 추가
-          }
-        });
-
-        // 팝업 배경 클릭 시 페이지 이동
-        popup.addEventListener("click", function (e) {
-          if (e.target === popup) {
-            // window.location.href = 'index.html'; // 이 두 줄은 동일한 문제
-            // window.location.href = 'vault.html';
-            console.log(
-              "팝업 배경 클릭 - 팝업 닫기 또는 페이지 이동 로직 실행 필요"
-            ); // 로그 추가
-            // 팝업만 닫으려면:
-            popup.classList.remove("active");
-            popup.classList.add("hidden"); // hidden 클래스가 있다면 추가
-          }
-        });
-
-        // 비밀번호 제출 버튼 클릭 이벤트 (passwords.js 또는 script.js 내 로직)
-        // 이 부분은 passwords.js에 있을 가능성이 높지만, script.js에 있다면 이 블록 안에 있어야 합니다.
-        // 예시:
-        // submitButton.addEventListener('click', function() {
-        //     checkVaultAuthorization(passwordInput.value); // 비밀번호 확인 함수 호출
-        // });
-        // passwordInput.addEventListener('keypress', function(e) {
-        //     if (e.key === 'Enter') {
-        //          checkVaultAuthorization(passwordInput.value); // 비밀번호 확인 함수 호출
-        //     }
-        // });
-      } else {
-        console.error("Vault 페이지 팝업 관련 요소를 찾을 수 없습니다."); // 로그 추가
-      }
-    }
+    // Vault 페이지 비밀번호 제거 완료 (2026-02-11)
+    // 더 이상 vault 페이지에 비밀번호 보호 없음
 
     // *************** 기존 script.js 코드 끝 ***************
 
