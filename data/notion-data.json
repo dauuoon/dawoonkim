@@ -14,7 +14,7 @@
       "thumbColor": "#FD895F",
       "mainColor": "#FD895F",
       "modalTextColor": "#FD895F",
-      "modalBgColor": "#FFFFFF",
+      "modalBgColor": "#191919",
       "thumbnailImage": null,
       "coverImage": null,
       "images": [
@@ -69,11 +69,7 @@
       "modalBgColor": "#DFEFF6",
       "thumbnailImage": null,
       "coverImage": null,
-      "images": [
-        "img/projects/valoo/img1.jpg",
-        "img/projects/valoo/img2.jpg",
-        "img/projects/valoo/img3.jpg"
-      ],
+      "images": [],
       "order": 4,
       "number": "04",
       "year": 2025,
@@ -373,5 +369,5 @@
     "TOTAL_PROJECTS_COUNT": "119",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-02-10T05:31:36.600Z"
+  "lastUpdated": "2026-02-12T05:30:12.927Z"
 }
