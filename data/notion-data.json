@@ -14,7 +14,7 @@
       "thumbColor": "#FD895F",
       "mainColor": "#FD895F",
       "modalTextColor": "#FD895F",
-      "modalBgColor": "#191919",
+      "modalBgColor": "#FFFFFF",
       "thumbnailImage": null,
       "coverImage": null,
       "images": [
@@ -369,5 +369,5 @@
     "TOTAL_PROJECTS_COUNT": "119",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-02-12T05:30:12.927Z"
+  "lastUpdated": "2026-02-13T05:28:34.423Z"
 }
