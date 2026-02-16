@@ -56,6 +56,7 @@ async function renderProjects(projects) {
         color: project.mainColor,
         mo_color: project.modalTextColor,
         mo_bg: project.modalBgColor,
+        mo_bg_pc: project.modalBgColorPC,
         images: project.images
       };
     });
@@ -235,6 +236,7 @@ function showProjectContent(projectTitle) {
   document.documentElement.style.setProperty("--project-color", project.color);
   document.documentElement.style.setProperty("--project-mo-color", project.mo_color);
   document.documentElement.style.setProperty("--project-mo-bg", project.mo_bg);
+  document.documentElement.style.setProperty("--project-mo-bg-pc", project.mo_bg_pc);
 
   modal.querySelector(".project-title").textContent = project.title;
   modal.querySelector(".project-subtitle").textContent = project.subtitle;
@@ -260,6 +262,23 @@ function showProjectContent(projectTitle) {
 
   const currentToken = ++modalLoadToken;
 
+  // 프로젝트별 이미지 링크 매핑 (프로젝트명/파일명 → URL)
+  const imageLinkMap = {
+    // 특정 이미지에만 링크 추가
+    // 예: 'whybox/img7': 'https://example.com',
+    //     'whybox/img8': 'https://example.com/other',
+    //     'iplex/img5': 'https://example.com/iplex'
+  };
+
+  // 프로젝트명/파일명 추출 함수
+  function getImageKey(path) {
+    // "img/projects/whybox/img7.jpg" → "whybox/img7"
+    const parts = path.split('/');
+    const projectName = parts[2]; // "whybox"
+    const fileName = parts[3].split('.')[0]; // "img7"
+    return `${projectName}/${fileName}`;
+  }
+
   // 순차 로딩으로 변경 (동시 요청 최소화)
   async function loadImagesSequentially() {
     const loadedImages = [];
@@ -277,7 +296,8 @@ function showProjectContent(projectTitle) {
           image.alt = `${project.title} - image ${index + 1}`;
         });
 
-        loadedImages.push(img);
+        // 이미지와 원본 src 경로를 함께 저장
+        loadedImages.push({ img, src });
 
         const progress = Math.round(((index + 1) / project.images.length) * 100);
         const progressEl = modal.querySelector(".loading-progress");
@@ -299,11 +319,49 @@ function showProjectContent(projectTitle) {
     const imageContainer = document.createElement("div");
     imageContainer.className = "project-images";
 
-    loadedImages.forEach((img) => {
+    loadedImages.forEach(({ img, src }) => {
       const imgClone = img.cloneNode(true);
       imgClone.style.display = "block";
       imgClone.style.width = "100%";
-      imageContainer.appendChild(imgClone);
+      
+      // 이미지 드래그 방지
+      imgClone.addEventListener("dragstart", function(e) {
+        e.preventDefault();
+        return false;
+      });
+      
+      // 이미지 오른쪽 클릭 방지
+      imgClone.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        return false;
+      });
+      
+      // 프로젝트명/파일명 키 생성
+      const imageKey = getImageKey(src);
+      const linkUrl = imageLinkMap[imageKey];
+      
+      // 링크가 있으면 <a> 태그로 감싸기
+      if (linkUrl) {
+        const link = document.createElement("a");
+        link.href = linkUrl;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.style.display = "block";
+        // 링크 드래그 방지
+        link.addEventListener("dragstart", function(e) {
+          e.preventDefault();
+          return false;
+        });
+        // 링크 오른쪽 클릭 방지
+        link.addEventListener("contextmenu", function(e) {
+          e.preventDefault();
+          return false;
+        });
+        link.appendChild(imgClone);
+        imageContainer.appendChild(link);
+      } else {
+        imageContainer.appendChild(imgClone);
+      }
     });
 
     modalBody.style.opacity = "0";

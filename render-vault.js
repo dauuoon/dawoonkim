@@ -43,6 +43,18 @@ function initVaultEvents() {
   const studyItems = document.querySelectorAll(".study-item");
 
   studyItems.forEach((item) => {
+    // 이미지 드래그 방지
+    item.addEventListener("dragstart", function(e) {
+      e.preventDefault();
+      return false;
+    });
+    
+    // 이미지 오른쪽 클릭 방지
+    item.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+      return false;
+    });
+
     item.addEventListener("click", function () {
       const existingPopup = document.querySelector(".study-popup");
       if (existingPopup) {
@@ -57,6 +69,15 @@ function initVaultEvents() {
 
       const img = document.createElement("img");
       img.src = this.dataset.fullImage;
+      // 팝업 이미지도 드래그 방지
+      img.addEventListener("dragstart", function(e) {
+        e.preventDefault();
+        return false;
+      });
+      img.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        return false;
+      });
       content.appendChild(img);
 
       const closeBtn = document.createElement("div");

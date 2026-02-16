@@ -81,6 +81,7 @@ function normalizeProject(project) {
     mainColor: project.MainColor || '#000000',
     modalTextColor: project.ModalTextColor || '#000000',
     modalBgColor: project.ModalBgColor || '#FFFFFF',
+    modalBgColorPC: project.ModalBgColorPC || '#FFFFFF',
     thumbnailImage: project.thumbnailImage || null,
     coverImage: project.coverImage || null,
     images: images,

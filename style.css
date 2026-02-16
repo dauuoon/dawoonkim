@@ -568,6 +568,7 @@ h2 {
   right: 0;
   padding: 40px 50px;
   z-index: 99999; /* 모달의 내부 요소들도 동일한 z-index */
+  background: var(--project-mo-bg-pc);
 }
 
 /* 헤더 컨텐츠 래퍼 */

@@ -1,3 +1,29 @@
+/* 오른쪽 마우스 클릭 방지 */
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  return false;
+});
+
+/* 드래그앤드롭 방지 */
+document.addEventListener('dragstart', function(e) {
+  e.preventDefault();
+  return false;
+});
+
+/* 드래그 방지 (전체) */
+document.addEventListener('drag', function(e) {
+  e.preventDefault();
+  return false;
+});
+
+/* 이미지 드래그 방지 */
+document.addEventListener('mousedown', function(e) {
+  if (e.button === 2) { // 오른쪽 버튼
+    e.preventDefault();
+    return false;
+  }
+});
+
 /* Notion 데이터 로드 및 초기화 */
 $(document).ready(async function() {
   try {
