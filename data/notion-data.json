@@ -225,15 +225,6 @@
       "link": null
     },
     {
-      "id": "re_2",
-      "section": "RESEARCH",
-      "title": "Effects of a Question-Based AI Self-Feedback Tool ···",
-      "detail": "",
-      "startDate": "2026.02",
-      "endDate": "",
-      "link": null
-    },
-    {
       "id": "ed_2",
       "section": "EDUCATION",
       "title": "DAEGU CATHOLIC Univ.",
@@ -369,5 +360,5 @@
     "TOTAL_PROJECTS_COUNT": "119",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-02-11T05:31:05.885Z"
+  "lastUpdated": "2026-02-15T05:26:40.844Z"
 }
