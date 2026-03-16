@@ -227,10 +227,10 @@
     {
       "id": "ed_2",
       "section": "EDUCATION",
-      "title": "DAEGU CATHOLIC Univ.",
-      "detail": "Digital Design",
-      "startDate": "2012.02",
-      "endDate": "2017.02",
+      "title": "EWHA WOMANS Univ.",
+      "detail": "Media Interaction Design",
+      "startDate": "2025.03",
+      "endDate": "",
       "link": null
     },
     {
@@ -245,10 +245,10 @@
     {
       "id": "ed_1",
       "section": "EDUCATION",
-      "title": "EWHA WOMANS Univ.",
-      "detail": "Media Interaction Design",
-      "startDate": "2025.03",
-      "endDate": "",
+      "title": "DAEGU CATHOLIC Univ.",
+      "detail": "Digital Design",
+      "startDate": "2012.02",
+      "endDate": "2017.02",
       "link": null
     },
     {
@@ -360,5 +360,5 @@
     "TOTAL_PROJECTS_COUNT": "119",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-03-15T05:30:52.140Z"
+  "lastUpdated": "2026-03-16T05:36:30.802Z"
 }
