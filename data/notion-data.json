@@ -207,42 +207,6 @@
   ],
   "about": [
     {
-      "id": "ex_1",
-      "section": "EXPERIENCE",
-      "title": "SOTONGFIVE,",
-      "detail": "UXUI Lead Designer",
-      "startDate": "2019.02",
-      "endDate": "2024.08",
-      "link": null
-    },
-    {
-      "id": "ex_2",
-      "section": "EXPERIENCE",
-      "title": "BrandAcumen,",
-      "detail": "BX Designer",
-      "startDate": "2017.02",
-      "endDate": "2018.02",
-      "link": null
-    },
-    {
-      "id": "ed_1",
-      "section": "EDUCATION",
-      "title": "DAEGU CATHOLIC Univ.",
-      "detail": "Digital Design",
-      "startDate": "2012.02",
-      "endDate": "2017.02",
-      "link": null
-    },
-    {
-      "id": "ed_2",
-      "section": "EDUCATION",
-      "title": "EWHA WOMANS Univ.",
-      "detail": "Media Interaction Design",
-      "startDate": "2025.03",
-      "endDate": "",
-      "link": null
-    },
-    {
       "id": "ce_1",
       "section": "CERTIFICATE",
       "title": "Service Experience Design",
@@ -261,6 +225,15 @@
       "link": null
     },
     {
+      "id": "ed_2",
+      "section": "EDUCATION",
+      "title": "EWHA WOMANS Univ.",
+      "detail": "Media Interaction Design",
+      "startDate": "2025.03",
+      "endDate": "",
+      "link": null
+    },
+    {
       "id": "re_1",
       "section": "RESEARCH",
       "title": "A Comparative Study on User Perception ···",
@@ -268,6 +241,33 @@
       "startDate": "2025.11",
       "endDate": "",
       "link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003258636"
+    },
+    {
+      "id": "ed_1",
+      "section": "EDUCATION",
+      "title": "DAEGU CATHOLIC Univ.",
+      "detail": "Digital Design",
+      "startDate": "2012.02",
+      "endDate": "2017.02",
+      "link": null
+    },
+    {
+      "id": "ex_1",
+      "section": "EXPERIENCE",
+      "title": "SOTONGFIVE,",
+      "detail": "UXUI Lead Designer",
+      "startDate": "2019.02",
+      "endDate": "2024.08",
+      "link": null
+    },
+    {
+      "id": "ex_2",
+      "section": "EXPERIENCE",
+      "title": "BrandAcumen,",
+      "detail": "BX Designer",
+      "startDate": "2017.02",
+      "endDate": "2018.02",
+      "link": null
     }
   ],
   "vault": [
@@ -357,8 +357,8 @@
     }
   ],
   "settings": {
-    "PASSWORD": "26d01",
-    "TOTAL_PROJECTS_COUNT": "119"
+    "TOTAL_PROJECTS_COUNT": "119",
+    "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-05-04T06:01:36.062Z"
+  "lastUpdated": "2026-05-05T05:53:22.585Z"
 }
