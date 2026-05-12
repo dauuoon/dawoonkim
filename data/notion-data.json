@@ -207,13 +207,13 @@
   ],
   "about": [
     {
-      "id": "ce_1",
-      "section": "CERTIFICATE",
-      "title": "Service Experience Design",
-      "detail": "Engineer",
-      "startDate": "2024.12",
+      "id": "re_1",
+      "section": "RESEARCH",
+      "title": "A Comparative Study on User Perception ···",
+      "detail": "",
+      "startDate": "2025.11",
       "endDate": "",
-      "link": null
+      "link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003258636"
     },
     {
       "id": "ce_2",
@@ -221,6 +221,15 @@
       "title": "Colorist",
       "detail": "Industrial Engineer",
       "startDate": "2017.08",
+      "endDate": "",
+      "link": null
+    },
+    {
+      "id": "ce_1",
+      "section": "CERTIFICATE",
+      "title": "Service Experience Design",
+      "detail": "Engineer",
+      "startDate": "2024.12",
       "endDate": "",
       "link": null
     },
@@ -234,15 +243,6 @@
       "link": null
     },
     {
-      "id": "re_1",
-      "section": "RESEARCH",
-      "title": "A Comparative Study on User Perception ···",
-      "detail": "",
-      "startDate": "2025.11",
-      "endDate": "",
-      "link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003258636"
-    },
-    {
       "id": "ed_1",
       "section": "EDUCATION",
       "title": "DAEGU CATHOLIC Univ.",
@@ -252,21 +252,21 @@
       "link": null
     },
     {
-      "id": "ex_1",
-      "section": "EXPERIENCE",
-      "title": "SOTONGFIVE,",
-      "detail": "UXUI Lead Designer",
-      "startDate": "2019.02",
-      "endDate": "2024.08",
-      "link": null
-    },
-    {
       "id": "ex_2",
       "section": "EXPERIENCE",
       "title": "BrandAcumen,",
       "detail": "BX Designer",
       "startDate": "2017.02",
       "endDate": "2018.02",
+      "link": null
+    },
+    {
+      "id": "ex_1",
+      "section": "EXPERIENCE",
+      "title": "SOTONGFIVE,",
+      "detail": "UXUI Lead Designer",
+      "startDate": "2019.02",
+      "endDate": "2024.08",
       "link": null
     }
   ],
@@ -360,5 +360,5 @@
     "TOTAL_PROJECTS_COUNT": "119",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-05-11T06:15:48.273Z"
+  "lastUpdated": "2026-05-12T06:02:32.789Z"
 }
