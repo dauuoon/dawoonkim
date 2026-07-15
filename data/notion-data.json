@@ -2,18 +2,18 @@
   "projects": [
     {
       "id": "proj_005",
-      "title": "WHY BOX",
-      "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구",
+      "title": "Minddit-Core",
+      "subtitle": "마인딧 코어, 정신건강 프로그램 운영 서비스",
       "description": "",
-      "date": "Date : 2025.12",
-      "projectType": "[Personal Project]",
-      "part": "BX · UIUX DESIGN (100%) DEVELOPMENT (100%)",
+      "date": "Date : 2026.06",
+      "projectType": "[Team Project]",
+      "part": "BX · UIUX DESIGN (80%) DEVELOPMENT (70%)",
       "client": "Client : Academic Project",
       "tags": [],
       "status": "UNLOCKED",
-      "thumbColor": "#FD895F",
-      "mainColor": "#FD895F",
-      "modalTextColor": "#FD895F",
+      "thumbColor": "#485763",
+      "mainColor": "#485763",
+      "modalTextColor": "#485763",
       "modalBgColor": "#FFFFFF",
       "thumbnailImage": null,
       "coverImage": null,
@@ -48,25 +48,25 @@
       ],
       "order": 5,
       "number": "05",
-      "year": 2025,
+      "year": 2026,
       "category": "STUDY",
       "techType": "WEB"
     },
     {
       "id": "proj_004",
-      "title": "VALOO-ACT WORKSHEET",
-      "subtitle": "수용전념치료(ACT) 가치 명확화 디지털 인터페이스 도구",
+      "title": "WHY BOX",
+      "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구",
       "description": "",
-      "date": "Date : 2025.08",
-      "projectType": "[Team Project]",
-      "part": "BX · UIUX DESIGN (60%) DEVELOPMENT (30%)",
+      "date": "Date : 2025.12",
+      "projectType": "[Personal Project]",
+      "part": "BX · UIUX DESIGN (100%) DEVELOPMENT (100%)",
       "client": "Client : Academic Project",
       "tags": [],
       "status": "UNLOCKED",
-      "thumbColor": "#00A2F3",
-      "mainColor": "#0E3147",
-      "modalTextColor": "#0E3147",
-      "modalBgColor": "#DFEFF6",
+      "thumbColor": "#FD895F",
+      "mainColor": "#FD895F",
+      "modalTextColor": "#FD895F",
+      "modalBgColor": "#FFFFFF",
       "thumbnailImage": null,
       "coverImage": null,
       "images": [],
@@ -74,7 +74,7 @@
       "number": "04",
       "year": 2025,
       "category": "STUDY",
-      "techType": "APP"
+      "techType": "WEB"
     },
     {
       "id": "proj_003",
@@ -218,18 +218,18 @@
     {
       "id": "ce_2",
       "section": "CERTIFICATE",
-      "title": "Colorist",
-      "detail": "Industrial Engineer",
-      "startDate": "2017.08",
+      "title": "Service Experience Design",
+      "detail": "Engineer",
+      "startDate": "2024.12",
       "endDate": "",
       "link": null
     },
     {
       "id": "ce_1",
       "section": "CERTIFICATE",
-      "title": "Service Experience Design",
-      "detail": "Engineer",
-      "startDate": "2024.12",
+      "title": "Colorist",
+      "detail": "Industrial Engineer",
+      "startDate": "2017.08",
       "endDate": "",
       "link": null
     },
@@ -254,19 +254,19 @@
     {
       "id": "ex_2",
       "section": "EXPERIENCE",
-      "title": "BrandAcumen,",
-      "detail": "BX Designer",
-      "startDate": "2017.02",
-      "endDate": "2018.02",
+      "title": "SOTONGFIVE,",
+      "detail": "UXUI Lead Designer",
+      "startDate": "2019.02",
+      "endDate": "2024.08",
       "link": null
     },
     {
       "id": "ex_1",
       "section": "EXPERIENCE",
-      "title": "SOTONGFIVE,",
-      "detail": "UXUI Lead Designer",
-      "startDate": "2019.02",
-      "endDate": "2024.08",
+      "title": "BrandAcumen,",
+      "detail": "BX Designer",
+      "startDate": "2017.02",
+      "endDate": "2018.02",
       "link": null
     }
   ],
@@ -360,5 +360,5 @@
     "TOTAL_PROJECTS_COUNT": "119",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-07-14T05:46:19.586Z"
+  "lastUpdated": "2026-07-15T05:46:39.857Z"
 }
