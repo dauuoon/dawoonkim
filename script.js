@@ -264,12 +264,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ✅ Matter.js 엔진 생성
   const engine = Engine.create({
+    enableSleeping: true, // 충돌 후 안정화되면 수면 상태로 전환
     gravity: {
       x: 0,
-      y: 2.2, // 기본값 1에서 증가 (더 빠른 낙하)
-      scale: 0.0006, // 미세 조정 가능
+      y: 1.4, // 과도한 중력은 스택 불안정 초래 → 완화
+      scale: 0.0006,
     },
   });
+
+  // 충돌 해상도 안정성을 위해 반복 횟수 상향
+  engine.positionIterations = 8; // 기본 6
+  engine.velocityIterations = 6; // 기본 4
+  engine.constraintIterations = 4; // 기본 2
   const render = Render.create({
     canvas: document.getElementById("matterCanvas"),
     engine: engine,
@@ -336,10 +342,14 @@ document.addEventListener("DOMContentLoaded", function () {
       obj.width * scaleFactor,
       obj.height * scaleFactor,
       {
-        density: 0.005,
-        restitution: 1.2,
-        friction: 0.6,
-        frictionAir: 0.06,
+        // 과도한 튀김/진동 방지용 물리 파라미터 조정
+        density: 0.001,
+        restitution: 0.25, // 반발계수 낮춤 (에너지 누적 방지)
+        friction: 0.35,
+        frictionStatic: 0.6,
+        frictionAir: 0.02,
+        sleepThreshold: 25, // 안정 시 수면 상태 진입을 빠르게
+        chamfer: { radius: 4 }, // 모서리 걸림 완화로 떨림 감소
         render: {
           sprite: {
             texture: obj.texture,
@@ -392,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
     constraint: {
-      stiffness: 0.3,
+      stiffness: 0.1, // 드래그 시 과도한 진동 완화
       render: { visible: false },
     },
   });
@@ -407,8 +417,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // ✅ 스크롤 시 중력 조정
   window.addEventListener("scroll", () => {
     let scrollY = window.scrollY;
-    let newGravity = 0.8 + scrollY / 250;
-    engine.world.gravity.y = Math.min(newGravity, 5);
+    // 스크롤에 따른 중력 증가값을 완만하게, 상한도 낮춤
+    let newGravity = 0.8 + scrollY / 500;
+    engine.world.gravity.y = Math.min(newGravity, 2.5);
   });
 
   // ✅ 창 크기 변경 시 반응형 조정
