@@ -38,6 +38,7 @@ a:active {
 /* 헤더 여백 */
 .header {
   margin: 50px;
+  position: relative; /* refresh 버튼 절대배치 기준 */
 }
 
 h1 {
@@ -453,6 +454,21 @@ h2 {
   font-family: Montserrat;
   font-weight: 300;
 }
+
+/* 새로고침 버튼 (우상단 고정) */
+.refresh-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.refresh-button svg { display: block; }
 
 .about_project {
   width: 360px;

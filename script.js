@@ -260,22 +260,39 @@ setInterval(updateClock3, 1000);
 updateClock3();
 
 document.addEventListener("DOMContentLoaded", function () {
-  const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter;
+  // 새로고침 버튼 클릭 시 페이지 새로고침
+  const refreshBtn = document.getElementById("refresh-button");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", function () {
+      // 강제 새로고침 (캐시 무시)
+      window.location.reload();
+    });
 
-  // ✅ Matter.js 엔진 생성
+    // 메인 타이틀과 같은 행 정렬 (헤더 내 상대 위치)
+    function positionRefreshButton() {
+      const header = document.querySelector('.header');
+      const mainTitle = document.getElementById('main-title');
+      if (header && mainTitle) {
+        // header 기준 offsetTop을 사용해 같은 행 상단에 위치
+        refreshBtn.style.top = mainTitle.offsetTop + 'px';
+        refreshBtn.style.right = '0px';
+      }
+    }
+    // 최초 및 리사이즈 시 재배치
+    positionRefreshButton();
+    window.addEventListener('resize', positionRefreshButton);
+  }
+
+  const { Engine, Render, World, Bodies, Body, Mouse, MouseConstraint } = Matter;
+
+  // 약한 중력 + 탄성 바운스
   const engine = Engine.create({
-    enableSleeping: true, // 충돌 후 안정화되면 수면 상태로 전환
     gravity: {
       x: 0,
-      y: 1.4, // 과도한 중력은 스택 불안정 초래 → 완화
+      y: 0.4, // 약간 더 빠르게 떨어지도록 중력 강화
       scale: 0.0006,
     },
   });
-
-  // 충돌 해상도 안정성을 위해 반복 횟수 상향
-  engine.positionIterations = 8; // 기본 6
-  engine.velocityIterations = 6; // 기본 4
-  engine.constraintIterations = 4; // 기본 2
   const render = Render.create({
     canvas: document.getElementById("matterCanvas"),
     engine: engine,
@@ -288,37 +305,43 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // ✅ 개체 초기 위치 설정 (랜덤)
+  // 새로고침 시 n1/n2/n3 중 하나를 랜덤 선택
+  const objectFolders = ["n1", "n2", "n3"];
+  const selectedFolder = objectFolders[Math.floor(Math.random() * objectFolders.length)];
+  // 디버깅/검증용 노출 (필요 시 확인 가능)
+  window.FALLING_OBJECT_FOLDER = selectedFolder;
+
   const objects = [
     {
-      texture: "img/image1.png",
+      texture: `img/object/${selectedFolder}/image1.png`,
       x: Math.random() * window.innerWidth,
       y: -185,
       width: 180,
       height: 90,
     },
     {
-      texture: "img/image2.png",
+      texture: `img/object/${selectedFolder}/image2.png`,
       x: Math.random() * window.innerWidth,
       y: -220,
       width: 200,
       height: 100,
     },
     {
-      texture: "img/image3.png",
+      texture: `img/object/${selectedFolder}/image3.png`,
       x: Math.random() * window.innerWidth,
       y: -280,
       width: 220,
       height: 110,
     },
     {
-      texture: "img/image4.png",
+      texture: `img/object/${selectedFolder}/image4.png`,
       x: Math.random() * window.innerWidth,
       y: -330,
       width: 200,
       height: 100,
     },
     {
-      texture: "img/image5.png",
+      texture: `img/object/${selectedFolder}/image5.png`,
       x: Math.random() * window.innerWidth,
       y: -370,
       width: 180,
@@ -336,20 +359,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   // ✅ Matter.js 개체 생성
   const bodies = objects.map((obj) => {
-    return Bodies.rectangle(
+    const rect = Bodies.rectangle(
       obj.x,
       obj.y,
       obj.width * scaleFactor,
       obj.height * scaleFactor,
       {
-        // 과도한 튀김/진동 방지용 물리 파라미터 조정
-        density: 0.001,
-        restitution: 0.25, // 반발계수 낮춤 (에너지 누적 방지)
-        friction: 0.35,
-        frictionStatic: 0.6,
-        frictionAir: 0.02,
-        sleepThreshold: 25, // 안정 시 수면 상태 진입을 빠르게
-        chamfer: { radius: 4 }, // 모서리 걸림 완화로 떨림 감소
+        density: 0.003,
+        // 바운스 강도는 오브젝트별로 랜덤 지정 (0.5 ~ 0.95)
+        restitution: 0.5 + Math.random() * 0.45,
+        friction: 0.0,
+        frictionAir: 0.012, // 공기저항 감소 → 속도 유지
         render: {
           sprite: {
             texture: obj.texture,
@@ -359,6 +379,9 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       }
     );
+    // 개별 설정 저장
+    rect.__restOriginal = rect.restitution;
+    return rect;
   });
 
   // ✅ 바닥 & 벽 생성
@@ -369,6 +392,7 @@ document.addEventListener("DOMContentLoaded", function () {
     10,
     { isStatic: true, render: { fillStyle: "transparent" } }
   );
+  ground.label = 'ground';
   const leftWall = Bodies.rectangle(
     0,
     window.innerHeight / 2,
@@ -388,13 +412,25 @@ document.addEventListener("DOMContentLoaded", function () {
   function addBodiesWithDelay(bodies, delay) {
     bodies.forEach((body, index) => {
       setTimeout(() => {
+        // 초기 속도와 회전으로 느린 드리프트 부여 (아래로 진입하도록 하향 바이어스)
+        const vx = (Math.random() - 0.5) * 0.6;
+        const vy = Math.random() * 0.8 + 0.25; // 초기 하향 속도 소폭 증가
+        Body.setVelocity(body, { x: vx, y: vy });
+        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.01);
+        // 부드러운 자가 회전 파라미터 설정
+        body.__spinAmp = 0.01 + Math.random() * 0.02; // 0.01~0.03 rad
+        body.__spinSpeed = 0.001 + Math.random() * 0.002; // 0.001~0.003 rad/ms
+        body.__baseAngle = body.angle || 0;
+        body.__spinStartTime = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+        body.__state = 'falling';
+
         World.add(engine.world, body);
       }, index * delay);
     });
   }
   addBodiesWithDelay(bodies, 500);
 
-  // ✅ 벽과 바닥 추가
+  // ✅ 벽과 바닥 추가 (경계 반사) — 상단 벽 제거하여 위에서 진입 가능
   World.add(engine.world, [ground, leftWall, rightWall]);
 
   // ✅ 마우스 컨트롤 추가
@@ -402,7 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
     constraint: {
-      stiffness: 0.1, // 드래그 시 과도한 진동 완화
+      stiffness: 0.3,
       render: { visible: false },
     },
   });
@@ -414,12 +450,131 @@ document.addEventListener("DOMContentLoaded", function () {
   Matter.Runner.run(engine);
   Render.run(render);
 
-  // ✅ 스크롤 시 중력 조정
-  window.addEventListener("scroll", () => {
-    let scrollY = window.scrollY;
-    // 스크롤에 따른 중력 증가값을 완만하게, 상한도 낮춤
-    let newGravity = 0.8 + scrollY / 500;
-    engine.world.gravity.y = Math.min(newGravity, 2.5);
+  // ✅ 드리프트 유지: 주기적으로 미세한 힘을 가해 자연스러운 부유감 연출
+  setInterval(() => {
+    engine.world.bodies.forEach((b) => {
+      if (b.isStatic) return;
+      const fx = (Math.random() - 0.5) * 0.00002;
+      const fy = (Math.random() - 0.5) * 0.00002;
+      Body.applyForce(b, b.position, { x: fx, y: fy });
+    });
+  }, 1500);
+
+  // ✅ 바닥에 닿으면 10초 머물렀다가 화면 밖으로 내려가며, 곧바로 위에서 재진입
+  Matter.Events.on(engine, 'collisionStart', (event) => {
+    event.pairs.forEach((pair) => {
+      const a = pair.bodyA;
+      const b = pair.bodyB;
+      const hitGround = (a.label === 'ground' && !b.isStatic) || (b.label === 'ground' && !a.isStatic);
+      if (hitGround) {
+        const obj = a.label === 'ground' ? b : a;
+        if (!obj.__state || obj.__state === 'falling') {
+          // 첫 충돌: 한 번만 가변 탄성으로 튕김
+          if (!obj.__bouncedOnce) {
+            obj.__bouncedOnce = true;
+            // 현재 속도를 기반으로 가변 반사 속도 계산
+            const incomingVy = Math.abs(obj.velocity?.y || 2);
+            const factor = 0.4 + Math.random() * 0.6; // 0.4 ~ 1.0
+            let newVy = -Math.max(1.2, incomingVy * factor);
+            // 순간적으로 약간 위로 밀어 재충돌 방지
+            Body.setPosition(obj, { x: obj.position.x, y: obj.position.y - 6 });
+            Body.setVelocity(obj, { x: obj.velocity.x, y: newVy });
+            // 이 접촉에서는 정지하지 않고 즉시 반환 (자연스러운 1회 바운스)
+            return;
+          }
+
+          // 두 번째 접촉 이후: 정지 및 10초 대기
+          Body.setVelocity(obj, { x: 0, y: 0 });
+          Body.setAngularVelocity(obj, 0);
+          Body.setStatic(obj, true);
+          obj.__state = 'settled';
+          // 정지 중 살짝 흔들림을 위한 기준값 설정
+          obj.__baseAngle = obj.angle || 0;
+          obj.__spinStartTime = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+
+          setTimeout(() => {
+            // 화면 아래로 이탈하도록 하향 속도 부여
+            Body.setStatic(obj, false);
+            obj.__state = 'exiting';
+            // 바닥과의 충돌을 일시적으로 무시하여 통과
+            obj.isSensor = true;
+            // 페이드 아웃 초기화
+            obj.render = obj.render || {};
+            obj.render.opacity = 1;
+            obj.__exitStartTime = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+            // 약간 아래로 위치 보정 후 하향 속도 적용 (너무 급하지 않게)
+            Body.setPosition(obj, { x: obj.position.x, y: obj.position.y + 12 });
+            Body.setVelocity(obj, { x: (Math.random() - 0.5) * 0.5, y: 3.2 });
+          }, 10000);
+        }
+      }
+    });
+  });
+
+  // ✅ 화면 밖으로 내려간 오브젝트는 일정 시간 후 위에서 재스폰
+  const RESPAWN_DELAY_MS = 2000; // 퇴장 후 대기 시간(2초)
+  Matter.Events.on(engine, 'afterUpdate', () => {
+    engine.world.bodies.forEach((obj) => {
+      if (obj.isStatic) return;
+      // 상태별 자가 회전 처리
+      const now = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+      if (!obj.__spinAmp) {
+        obj.__spinAmp = 0.015;
+        obj.__spinSpeed = 0.0015;
+        obj.__baseAngle = obj.angle || 0;
+        obj.__spinStartTime = now;
+      }
+      if (obj.__state === 'settled') {
+        // 정지 중엔 약한 좌우 흔들림
+        const phase = (now - obj.__spinStartTime) * obj.__spinSpeed;
+        const targetAngle = obj.__baseAngle + obj.__spinAmp * Math.sin(phase);
+        Body.setAngle(obj, targetAngle);
+      } else if (obj.__state === 'falling' || obj.__state === 'exiting') {
+        // 낙하/퇴장 중 각속도가 너무 작으면 약하게 유지
+        if (Math.abs(obj.angularVelocity || 0) < 0.0015) {
+          Body.setAngularVelocity(obj, ((Math.random() < 0.5) ? -1 : 1) * 0.003);
+        }
+      }
+      // 스르륵 페이드 아웃 + 자연스러운 드리프트/가속: 퇴장 중 처리
+      if (obj.__state === 'exiting') {
+        // 좌우 드리프트(사인 곡선 기반)와 점진적 하향 속도 증가
+        const tExit = (typeof performance !== 'undefined' ? performance.now() : Date.now()) - (obj.__exitStartTime || 0);
+        const driftVx = Math.sin(tExit * 0.004) * 0.6; // 좌우 천천히 흔들리며 이동
+        const newVy = Math.min((obj.velocity?.y || 0) + 0.02, 4.2); // 부드럽게 하향 가속
+        Body.setVelocity(obj, { x: driftVx, y: newVy });
+        // 회전이 너무 작다면 살짝 유지해 딱딱함 완화
+        if (Math.abs(obj.angularVelocity || 0) < 0.0025) {
+          Body.setAngularVelocity(obj, ((Math.random() < 0.5) ? -1 : 1) * 0.004);
+        }
+        const fadeStartY = window.innerHeight - 60; // 페이드 시작 시점
+        const fadeEndY = window.innerHeight + 160;  // 완전 종료 시점
+        if (obj.position.y > fadeStartY) {
+          const t = Math.min(1, (obj.position.y - fadeStartY) / (fadeEndY - fadeStartY));
+          if (!obj.render) obj.render = {};
+          obj.render.opacity = 1 - t; // 1 → 0
+        }
+        if (obj.position.y > fadeEndY) {
+          // 잠시 대기 후 재스폰
+          obj.__state = 'cooldown';
+          Body.setStatic(obj, true);
+          obj.isSensor = true; // 오프스크린 유지
+          setTimeout(() => {
+            Body.setStatic(obj, false);
+            // 위에서 재스폰
+            Body.setPosition(obj, { x: Math.random() * window.innerWidth, y: -120 });
+            Body.setVelocity(obj, { x: (Math.random() - 0.5) * 0.6, y: Math.random() * 0.8 + 0.25 });
+            Body.setAngularVelocity(obj, (Math.random() - 0.5) * 0.01);
+            obj.__state = 'falling';
+            // 다음 사이클에서 다시 1회 바운스 가능하도록 초기화
+            obj.__bouncedOnce = false;
+            // 센서 모드 해제 및 불투명 복원
+            obj.isSensor = false;
+            if (!obj.render) obj.render = {};
+            obj.render.opacity = 1;
+          }, RESPAWN_DELAY_MS);
+        }
+      }
+    });
   });
 
   // ✅ 창 크기 변경 시 반응형 조정
