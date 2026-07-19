@@ -1,7 +1,7 @@
 {
   "projects": [
     {
-      "id": "proj_004",
+      "id": "proj_005",
       "title": "Minddit-Core",
       "subtitle": "마인딧 코어, 정신건강 프로그램 운영 서비스",
       "description": "",
@@ -14,6 +14,30 @@
       "thumbColor": "#485763",
       "mainColor": "#485763",
       "modalTextColor": "#485763",
+      "modalBgColor": "#FFFFFF",
+      "thumbnailImage": null,
+      "coverImage": null,
+      "images": [],
+      "order": 5,
+      "number": "04",
+      "year": 2026,
+      "category": "STUDY",
+      "techType": "WEB"
+    },
+    {
+      "id": "proj_004",
+      "title": "WHY BOX",
+      "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구",
+      "description": "",
+      "date": "Date : 2025.12",
+      "projectType": "[Personal Project]",
+      "part": "BX · UIUX DESIGN (100%) DEVELOPMENT (100%)",
+      "client": "Client : Academic Project",
+      "tags": [],
+      "status": "UNLOCKED",
+      "thumbColor": "#FD895F",
+      "mainColor": "#FD895F",
+      "modalTextColor": "#FD895F",
       "modalBgColor": "#FFFFFF",
       "thumbnailImage": null,
       "coverImage": null,
@@ -46,32 +70,8 @@
         "img/projects/whybox/img26.jpg",
         "img/projects/whybox/img27.jpg"
       ],
-      "order": 5,
-      "number": "05",
-      "year": 2026,
-      "category": "STUDY",
-      "techType": "WEB"
-    },
-    {
-      "id": "proj_005",
-      "title": "WHY BOX",
-      "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구",
-      "description": "",
-      "date": "Date : 2025.12",
-      "projectType": "[Personal Project]",
-      "part": "BX · UIUX DESIGN (100%) DEVELOPMENT (100%)",
-      "client": "Client : Academic Project",
-      "tags": [],
-      "status": "UNLOCKED",
-      "thumbColor": "#FD895F",
-      "mainColor": "#FD895F",
-      "modalTextColor": "#FD895F",
-      "modalBgColor": "#FFFFFF",
-      "thumbnailImage": null,
-      "coverImage": null,
-      "images": [],
       "order": 4,
-      "number": "04",
+      "number": "05",
       "year": 2025,
       "category": "STUDY",
       "techType": "WEB"
@@ -209,7 +209,7 @@
     {
       "id": "re_1",
       "section": "RESEARCH",
-      "title": "A Comparative Study on User Perception ···",
+      "title": "Loading Microinteraction ···",
       "detail": "",
       "startDate": "2025.11",
       "endDate": "",
@@ -360,5 +360,5 @@
     "TOTAL_PROJECTS_COUNT": "120",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-07-19T05:59:10.316Z"
+  "lastUpdated": "2026-07-19T17:38:22.545Z"
 }
