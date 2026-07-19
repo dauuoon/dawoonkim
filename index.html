@@ -150,19 +150,11 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-        <script>
-          // passwords.js 동적 로드 (선택사항 - GitHub에는 없고 로컬에만 있음)
-          const passwordScript = document.createElement('script');
-          passwordScript.src = 'passwords.js';
-          passwordScript.onerror = function() {
-            console.log('ℹ️ passwords.js 없음 (GitHub 배포 환경)');
-          };
-          document.head.appendChild(passwordScript);
-        </script>
+                <!-- passwords.js는 더 이상 사용하지 않으므로 로드를 제거했습니다. -->
         <script src="notion-api.js"></script>
         <script src="render-projects.js"></script>
         <script src="render-about.js"></script>
-        <script src="script.js"></script>
+        <script src="script.js?v=20260720"></script>
 
 </body>
 <footer>

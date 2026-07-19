@@ -104,13 +104,6 @@
         <h2>Design & Development
             <br>by Dawoon Kim
         </h2>
-        <!-- 새로고침 버튼 (헤더 행, 우측 정렬) -->
-        <button id="refresh-button" class="refresh-button" aria-label="Refresh page" title="Refresh">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M3 12a9 9 0 1 0 3.4-7" stroke="#E3C1B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M3 5v5h5" stroke="#E3C1B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
     </div>
 
     <!-- 메뉴 -->
@@ -203,19 +196,11 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-        <script>
-          // passwords.js 동적 로드 (선택사항 - GitHub에는 없고 로컬에만 있음)
-          const passwordScript = document.createElement('script');
-          passwordScript.src = 'passwords.js';
-          passwordScript.onerror = function() {
-            console.log('ℹ️ passwords.js 없음 (GitHub 배포 환경)');
-          };
-          document.head.appendChild(passwordScript);
-        </script>
+                <!-- passwords.js는 더 이상 사용하지 않으므로 로드를 제거했습니다. -->
         <script src="notion-api.js"></script>
         <script src="render-about.js"></script>
         <script src="render-vault.js"></script>
-        <script src="script.js"></script>
+        <script src="script.js?v=20260720"></script>
 </body>
 <footer>
 

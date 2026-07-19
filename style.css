@@ -304,7 +304,7 @@ h2 {
   font-weight: 200;
   font-family: Montserrat;
   opacity: 50%;
-  margin-top: 35px;
+  margin-top: 30px;
   margin-left: 40px;
 }
 
@@ -324,17 +324,18 @@ h2 {
   font-family: Montserrat;
   margin-top: -8px;
   color: #000000;
-  line-height: 1.6;
 }
 
-/* 어바웃 시간초 */
+/* 어바웃 시간초: 오버레이 하단 고정 배치 (프로젝트 버튼 위) */
 #clock {
   font-size: 14px;
   font-weight: 300;
   font-family: Montserrat;
-  position: relative;
-  margin-top: 40px;
-  margin-bottom: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 110px; /* 프로젝트 버튼과 간격 확보 */
+  margin: 0;
   text-align: center;
 }
 
@@ -475,9 +476,11 @@ h2 {
   height: 40px;
   background-color: #d7b7a7;
   border-radius: 80px;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
+  position: absolute; /* 오버레이 하단에서 50px */
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 50px;
+  margin: 0;
 }
 
 .about_project_detail a {

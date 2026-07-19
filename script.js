@@ -730,7 +730,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     } else {
-      console.error("ABOUT 링크 요소를 찾을 수 없습니다."); // 디버깅을 위해 콘솔에 로그 남김
+      // ABOUT 링크 요소가 없는 경우 조용히 건너뜁니다.
+      console.debug("ABOUT 링크 요소 미존재 - 바인딩 생략");
     }
 
     // !!! 여기에 378번째 줄 오류가 발생했던 코드 !!!
@@ -794,7 +795,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
     } else {
-      console.error("ABOUT 닫기 버튼 요소를 찾을 수 없습니다."); // 디버깅 로그
+      // 닫기 버튼이 아직 로드되지 않은 경우 조용히 건너뜁니다.
+      console.debug("ABOUT 닫기 버튼 미존재 - 바인딩 생략");
     }
 
     // 메뉴 활성화 함수 (DOM 조작 포함)
@@ -990,7 +992,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // null 체크
     if (!popup || !passwordInput || !submitButton) {
-      console.error("Vault 요소를 찾을 수 없습니다!", {popup, passwordInput, submitButton});
+      // 비밀번호 UI가 제거된 환경에서는 조용히 스킵합니다.
       return;
     }
 
@@ -1117,6 +1119,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const isAuthorized = window.PASSWORD_AUTHORIZED === true;
     const popupContainer = document.getElementById("vault-popup-container");
     const vaultContent = document.querySelector(".vault-content");
+    // 비밀번호 UI가 제거된 경우(null) 조용히 스킵
+    if (!popupContainer || !vaultContent) {
+      return;
+    }
 
     if (!isAuthorized) {
       // 비인증 상태
