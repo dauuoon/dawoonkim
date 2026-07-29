@@ -268,6 +268,31 @@ function showProjectContent(projectTitle) {
 
   const currentToken = ++modalLoadToken;
 
+  // 헤더 높이만큼 본문을 아래로 내려 이미지가 가려지지 않도록 보정
+  const headerEl = modal.querySelector('.modal-header');
+  function applyHeaderOffset() {
+    try {
+      const h = headerEl ? headerEl.offsetHeight : 0;
+      if (modalBody) {
+        modalBody.style.paddingTop = h + 'px';
+      }
+    } catch (_) {}
+  }
+  // 모달 표시 직후 1회 적용
+  applyHeaderOffset();
+  // 리사이즈 시 재적용
+  const onResize = () => applyHeaderOffset();
+  window.addEventListener('resize', onResize);
+  // 닫기 시 정리
+  const closeBtn = modal.querySelector('.modal-close');
+  if (closeBtn) {
+    const cleanup = () => {
+      window.removeEventListener('resize', onResize);
+      closeBtn.removeEventListener('click', cleanup);
+    };
+    closeBtn.addEventListener('click', cleanup);
+  }
+
   // 프로젝트별 이미지 링크 매핑 (프로젝트명/파일명 → URL)
   const imageLinkMap = {
     // 특정 이미지에만 링크 추가
@@ -375,6 +400,8 @@ function showProjectContent(projectTitle) {
       modalBody.innerHTML = "";
       modalBody.appendChild(imageContainer);
       modalBody.style.opacity = "1";
+      // 이미지 삽입 후에도 헤더 높이 재계산
+      applyHeaderOffset();
     }, 300);
   }
 
