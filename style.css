@@ -685,6 +685,7 @@ h2 {
   height: auto;
   overflow-y: auto; /* 내용이 많으면 세로 스크롤바 표시 */
   overflow-x: hidden; /* 가로 스크롤바 방지 및 내용 넘침 숨김 */
+  background: inherit; /* 모달 배경과 동일 적용 */
 }
 
 /* 프로젝트 이미지 스타일 */
@@ -834,6 +835,7 @@ body.modal-open #nav-1 {
 /* 페이드 효과 */
 .modal-body {
   transition: opacity 0.3s ease;
+  background: inherit; /* 로딩 중에도 배경 유지 */
 }
 
 /* 에러 메시지 */

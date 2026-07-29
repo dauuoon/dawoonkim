@@ -233,10 +233,16 @@ function showProjectContent(projectTitle) {
   
   const modal = document.querySelector(".project-modal");
 
-  document.documentElement.style.setProperty("--project-color", project.color);
-  document.documentElement.style.setProperty("--project-mo-color", project.mo_color);
-  document.documentElement.style.setProperty("--project-mo-bg", project.mo_bg);
-  document.documentElement.style.setProperty("--project-mo-bg-pc", project.mo_bg_pc);
+  // 안전한 배경/텍스트 컬러 변수 설정 (falsy 값 방지)
+  const safeProjectColor = project.color || '#000000';
+  const safeMoColor = project.mo_color || safeProjectColor;
+  const safeMoBg = project.mo_bg || '#000000';
+  const safeMoBgPc = project.mo_bg_pc || safeMoBg;
+
+  document.documentElement.style.setProperty("--project-color", safeProjectColor);
+  document.documentElement.style.setProperty("--project-mo-color", safeMoColor);
+  document.documentElement.style.setProperty("--project-mo-bg", safeMoBg);
+  document.documentElement.style.setProperty("--project-mo-bg-pc", safeMoBgPc);
 
   modal.querySelector(".project-title").textContent = project.title;
   modal.querySelector(".project-subtitle").textContent = project.subtitle;
