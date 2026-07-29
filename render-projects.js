@@ -272,8 +272,16 @@ function showProjectContent(projectTitle) {
   const headerEl = modal.querySelector('.modal-header');
   function applyHeaderOffset() {
     try {
-      const h = headerEl ? headerEl.offsetHeight : 0;
-      if (modalBody) {
+      if (!modalBody) return;
+      // 기본값은 0으로 되돌려 데스크톱과 모바일에선 기존 표지 레이아웃 유지
+      modalBody.style.paddingTop = '0px';
+      if (!headerEl) return;
+      const headerPos = getComputedStyle(headerEl).position;
+      const w = window.innerWidth || document.documentElement.clientWidth;
+      // 중간 해상도(768–1023px)이며 헤더가 absolute일 때만 오프셋 적용
+      const shouldOffset = headerPos === 'absolute' && w <= 1023 && w > 767;
+      if (shouldOffset) {
+        const h = headerEl.offsetHeight || 0;
         modalBody.style.paddingTop = h + 'px';
       }
     } catch (_) {}
