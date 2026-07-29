@@ -3,7 +3,7 @@
     {
       "id": "proj_005",
       "title": "MINDDIT-CORE",
-      "subtitle": "정신건강 프로그램 운영 서비스, 마인딧 코어",
+      "subtitle": "정신건강 프로그램 운영 서비스",
       "description": "",
       "date": "Date : 2026.02 ~",
       "projectType": "[Service Project]",
@@ -29,7 +29,7 @@
     {
       "id": "proj_004",
       "title": "WHY BOX [MVP]",
-      "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구, 와이박스",
+      "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구",
       "description": "",
       "date": "Date : 2025.12 ~",
       "projectType": "[Research Project]",
@@ -38,7 +38,7 @@
       "tags": [],
       "status": "UNLOCKED",
       "thumbColor": "#FD895F",
-      "mainColor": "#FD895F",
+      "mainColor": "#191919",
       "modalTextColor": "#191919",
       "modalBgColor": "#FD895F",
       "thumbnailImage": null,
@@ -359,5 +359,5 @@
     "TOTAL_PROJECTS_COUNT": "120",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-07-29T10:56:36.925Z"
+  "lastUpdated": "2026-07-29T11:00:14.445Z"
 }
