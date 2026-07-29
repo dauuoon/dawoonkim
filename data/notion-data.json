@@ -28,7 +28,7 @@
     },
     {
       "id": "proj_004",
-      "title": "WHY BOX[MVP]",
+      "title": "WHY BOX [MVP]",
       "subtitle": "디자이너의 성장을 위한 AI 자기 피드백 도구, 와이박스",
       "description": "",
       "date": "Date : 2025.12 ~",
@@ -39,8 +39,8 @@
       "status": "UNLOCKED",
       "thumbColor": "#FD895F",
       "mainColor": "#FD895F",
-      "modalTextColor": "#FD895F",
-      "modalBgColor": "#FFFFFF",
+      "modalTextColor": "#191919",
+      "modalBgColor": "#FD895F",
       "thumbnailImage": null,
       "coverImage": null,
       "images": [
@@ -359,5 +359,5 @@
     "TOTAL_PROJECTS_COUNT": "120",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-07-29T05:59:18.428Z"
+  "lastUpdated": "2026-07-29T10:56:36.925Z"
 }
