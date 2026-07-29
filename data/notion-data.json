@@ -17,7 +17,9 @@
       "modalBgColor": "#FFFFFF",
       "thumbnailImage": null,
       "coverImage": null,
-      "images": [],
+      "images": [
+        "img/projects/mindditcore/img1.jpg"
+      ],
       "order": 5,
       "number": "04",
       "year": 2026,
@@ -42,7 +44,7 @@
       "thumbnailImage": null,
       "coverImage": null,
       "images": [
-        "img/projects/whybox/img1.gif",
+        "img/projects/whybox/img1.jpg",
         "img/projects/whybox/img2.jpg",
         "img/projects/whybox/img3.jpg",
         "img/projects/whybox/img4.jpg",
@@ -57,7 +59,6 @@
         "img/projects/whybox/img13.jpg",
         "img/projects/whybox/img14.jpg",
         "img/projects/whybox/img15.jpg",
-        "img/projects/whybox/img16.gif",
         "img/projects/whybox/img17.jpg",
         "img/projects/whybox/img18.jpg",
         "img/projects/whybox/img19.jpg",
@@ -65,9 +66,7 @@
         "img/projects/whybox/img21.jpg",
         "img/projects/whybox/img22.jpg",
         "img/projects/whybox/img23.jpg",
-        "img/projects/whybox/img24.jpg",
         "img/projects/whybox/img25.jpg",
-        "img/projects/whybox/img26.jpg",
         "img/projects/whybox/img27.jpg"
       ],
       "order": 4,

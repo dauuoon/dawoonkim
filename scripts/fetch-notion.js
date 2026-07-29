@@ -27,7 +27,7 @@ const PROJECT_FOLDER_MAP = {
   '01': '99das',
   '02': 'ridp',
   '03': 'iplex',
-  '04': 'valoo',
+  '04': 'mindditcore',
   '05': 'whybox'
 };
 
