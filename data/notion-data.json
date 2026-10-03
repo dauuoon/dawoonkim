@@ -206,6 +206,15 @@
   ],
   "about": [
     {
+      "id": "re_2",
+      "section": "RESEARCH",
+      "title": "Question-Based AI Self-Feedback ···",
+      "detail": "",
+      "startDate": "2026.09",
+      "endDate": "",
+      "link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003384819"
+    },
+    {
       "id": "re_1",
       "section": "RESEARCH",
       "title": "Loading Microinteraction ···",
@@ -359,5 +368,5 @@
     "TOTAL_PROJECTS_COUNT": "120",
     "PASSWORD": "26d01"
   },
-  "lastUpdated": "2026-10-02T05:06:05.964Z"
+  "lastUpdated": "2026-10-03T05:05:35.615Z"
 }
